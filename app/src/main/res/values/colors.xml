@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#db77ab</color>
+    <color name="colorPrimaryDark">#efc1d9</color>
+    <color name="colorAccent">#fcf4f8</color>
+
+    <color name="status_bar_back">#ff676767</color> <!-- this is blended with immersive_bars to produce the desired status bar color i.e. background_super_dark -->
+    <color name="bili_red">#db77ab</color>
+    <color name="bili_red2">#efc1d9</color>
+    <color name="bili_red3">#fcf4f8</color>
+
+
+    <color name="background_light">#fafafa</color>
+</resources>
