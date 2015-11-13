@@ -121,8 +121,8 @@ public class BadgedFourThreeImageView extends FourThreeImageView {
                 final Canvas canvas = new Canvas(bitmap);
                 final Paint backgroundPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
                 backgroundPaint.setColor(BACKGROUND_COLOR);
-                canvas.drawRoundRect(0, 0, width, height, CORNER_RADIUS * density, CORNER_RADIUS
-                        * density, backgroundPaint);
+                /*canvas.drawRoundRect(0, 0, width, height, CORNER_RADIUS * density, CORNER_RADIUS
+                        * density, backgroundPaint);*/
                 // this is the magic, this mode punches out the word as transparency
                 textPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
                 canvas.drawText(GIF, padding, height - padding, textPaint);

@@ -62,7 +62,8 @@ public class MainActivity extends Activity {
         grid.addOnScrollListener(new InfiniteScrollListener(layoutManager, dataManager) {
             @Override
             public void onLoadMore() {
-                dataManager.loadAllDataSources();
+               // bAdapter.
+                //dataManager.loadAllDataSources();
             }
         });
 

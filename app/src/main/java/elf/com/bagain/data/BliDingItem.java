@@ -24,6 +24,8 @@ public class BliDingItem extends Item implements Parcelable {
     public final int  credit;
     public final int coins;
     public final String duration;
+
+    public boolean hasFadedIn = false;
     @SuppressWarnings("unused")
     public static final Parcelable.Creator<BliDingItem> CREATOR = new Parcelable.Creator<BliDingItem>() {
         @Override

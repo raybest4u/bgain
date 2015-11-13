@@ -9,6 +9,8 @@
     <color name="bili_red2">#efc1d9</color>
     <color name="bili_red3">#fcf4f8</color>
 
-
+    <color name="background_dark">#ff333333</color>
     <color name="background_light">#fafafa</color>
+    <color name="gif_badge_light_image">#40000000</color>
+    <color name="gif_badge_dark_image">#b3ffffff</color>
 </resources>

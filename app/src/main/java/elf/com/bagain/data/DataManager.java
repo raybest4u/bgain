@@ -49,7 +49,9 @@ public class DataManager extends BaseDataManager implements DataLoadingSubject {
             loadingCount.incrementAndGet();
             int page = getNextPageIndex(source.key);
             switch (source.key) {
-                default:loadBliDing(( Source.DingSearchSource )source, page);
+                default:
+                    loadBliDing(( Source.DingSearchSource )source, page);
+                    break;
             }
         }
     }

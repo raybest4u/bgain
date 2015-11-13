@@ -24,6 +24,7 @@
             android:scrollbars="vertical"
             android:scrollbarStyle="outsideOverlay"
             android:clipToPadding="false"
+            android:background="@color/bili_red"
             android:elevation="1dp" />
 
         <ProgressBar

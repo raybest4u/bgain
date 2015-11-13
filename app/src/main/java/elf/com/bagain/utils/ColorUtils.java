@@ -16,11 +16,15 @@
 
 package elf.com.bagain.utils;
 
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.support.annotation.ColorInt;
 import android.support.annotation.FloatRange;
 import android.support.annotation.IntDef;
 import android.support.annotation.IntRange;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v7.graphics.Palette;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -74,13 +78,13 @@ public class ColorUtils {
      * Annoyingly we have to return this Lightness 'enum' rather than a boolean as palette isn't
      * guaranteed to find the most populous color.
      */
-   /* public static @Lightness int isDark(Palette palette) {
+    public static @Lightness int isDark(Palette palette) {
         Palette.Swatch mostPopulous = getMostPopulousSwatch(palette);
         if (mostPopulous == null) return LIGHTNESS_UNKNOWN;
         return isDark(mostPopulous.getHsl()) ? IS_DARK : IS_LIGHT;
     }
 
-    public static @Nullable Palette.Swatch getMostPopulousSwatch(Palette palette) {
+    public static @Nullable  Palette.Swatch getMostPopulousSwatch(Palette palette) {
         Palette.Swatch mostPopulous = null;
         if (palette != null) {
             for (Palette.Swatch swatch : palette.getSwatches()) {
@@ -90,7 +94,7 @@ public class ColorUtils {
             }
         }
         return mostPopulous;
-    }*/
+    }
 
     /**
      * Determines if a given bitmap is dark. This extracts a palette inline so should not be called
@@ -98,15 +102,15 @@ public class ColorUtils {
      * <p/>
      * Note: If palette fails then check the color of the central pixel
      */
-    /*public static boolean isDark(@NonNull Bitmap bitmap) {
+    public static boolean isDark(@NonNull Bitmap bitmap) {
         return isDark(bitmap, bitmap.getWidth() / 2, bitmap.getHeight() / 2);
-    }*/
+    }
 
     /**
      * Determines if a given bitmap is dark. This extracts a palette inline so should not be called
      * with a large image!! If palette fails then check the color of the specified pixel
      */
-    /*public static boolean isDark(@NonNull Bitmap bitmap, int backupPixelX, int backupPixelY) {
+    public static boolean isDark(@NonNull Bitmap bitmap, int backupPixelX, int backupPixelY) {
         // first try palette with a small color quant size
         Palette palette = Palette.from(bitmap).maximumColorCount(3).generate();
         if (palette != null && palette.getSwatches().size() > 0) {
@@ -115,7 +119,7 @@ public class ColorUtils {
             // if palette failed, then check the color of the specified pixel
             return isDark(bitmap.getPixel(backupPixelX, backupPixelY));
         }
-    }*/
+    }
 
     /**
      * Check that the lightness value 0 - 1

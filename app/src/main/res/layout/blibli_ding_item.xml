@@ -4,21 +4,16 @@
     android:id="@+id/story_title_background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bli_ding_item_background"
+    android:background="@color/bili_red2"
     android:orientation="vertical"
+    android:layout_margin="1px"
     android:stateListAnimator="@animator/raise" >
 
-    <carbon.widget.TextView
-        android:id="@+id/story_title"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="@dimen/padding_normal"
-        android:ellipsize="end"
-        tools:text="Amazing designer news story"  />
+
 
         <!-- Needs a concrete height/width as we animate the icon's scale so the asset
              needs to be larger to stay crisp.  Thus can't wrap height. -->
-        <ImageView
+        <elf.com.bagain.widget.BadgedFourThreeImageView
             android:id="@+id/pocket"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -26,15 +21,23 @@
             android:layout_margin="@dimen/spacing_micro"
             android:src="@mipmap/ic_launcher"/>
         <!-- Using a TextView rather than a button to have better control over the padding -->
+
+    <carbon.widget.TextView
+        android:id="@+id/story_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/spacing_micro"
+        android:layout_gravity="top|start"
+        android:gravity="center_vertical"
+        android:textColor="@android:color/white"
+        tools:text="Amazing designer news story"  />
         <carbon.widget.TextView
             android:id="@+id/story_comments"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/spacing_micro"
-            android:drawablePadding="@dimen/spacing_normal"
             android:gravity="center_vertical"
-            android:padding="@dimen/spacing_normal"
-            tools:text="7" />
+            android:layout_margin="@dimen/spacing_micro"
+            tools:text="7dsfaaaaa" />
 
 </FrameLayout>
