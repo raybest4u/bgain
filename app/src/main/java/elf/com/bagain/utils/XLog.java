@@ -21,6 +21,10 @@ public class XLog {
             Log.e("-->"+msg, "--"+e.getMessage());
         e.printStackTrace();
     }
+    public static void e(Exception e){
+        Log.e("---->",e.getMessage());
+        e.printStackTrace();
+    }
 
     public static void printObj(Object obj){
         //if(DEBUG)

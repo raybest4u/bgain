@@ -64,7 +64,7 @@ public class BlibliDingSearch {
                     bliarray.getJSONObject(i+"").getString("pic").toString(),
                     bliarray.getJSONObject(i+"").getInt("typeid"),
                     bliarray.getJSONObject(i+"").getString("subtitle").toString(),
-                    bliarray.getJSONObject(i+"").getInt("play"),
+                    bliarray.getJSONObject(i+"").getString("play"),
                     bliarray.getJSONObject(i+"").getInt("review"),
                     bliarray.getJSONObject(i+"").getInt("video_review"),
                     bliarray.getJSONObject(i+"").getInt("favorites"),

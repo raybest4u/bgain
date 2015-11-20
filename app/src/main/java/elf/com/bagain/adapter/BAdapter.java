@@ -6,19 +6,17 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.ColorMatrixColorFilter;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -38,7 +36,6 @@ import elf.com.bagain.data.BliDingItem;
 import elf.com.bagain.data.DataLoadingSubject;
 import elf.com.bagain.data.Item;
 import elf.com.bagain.utils.ObservableColorMatrix;
-import elf.com.bagain.utils.glide.BlibliTarget;
 import elf.com.bagain.widget.BadgedFourThreeImageView;
 
 /**
@@ -86,7 +83,7 @@ public class BAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 bindBiliDing((BliDingItem)item, (BiliDingHolder) holder);
             }
         }else {
-         //   bindLoadingViewHolder((LoadingMoreHolder) holder, position);
+            bindLoadingViewHolder((LoadingMoreHolder) holder, position);
         }
     }
     @Override
@@ -118,7 +115,7 @@ public class BAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         holder.title.setText(bliDing.title);
         holder.comments.setText(bliDing.author);
         final BadgedFourThreeImageView iv = (BadgedFourThreeImageView) holder.pocket;
-        Glide.with(host)
+       Glide.with(host)
                 .load(bliDing.pic)
                 .listener(new RequestListener<String, GlideDrawable>() {
 
@@ -146,8 +143,8 @@ public class BAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                                 }
                             });
                             saturation.setDuration(2000);
-                            saturation.setInterpolator(AnimationUtils.loadInterpolator(host,
-                                    android.R.interpolator.fast_out_slow_in));
+                          /*  saturation.setInterpolator(AnimationUtils.loadInterpolator(host,
+                                    android.R.interpolator.fast_out_slow_in));*/
                             saturation.addListener(new AnimatorListenerAdapter() {
                                 @Override
                                 public void onAnimationEnd(Animator animation) {
@@ -169,8 +166,8 @@ public class BAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         // needed to prevent seeing through view as it fades in
                 .placeholder(R.color.background_dark)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(new BlibliTarget(iv, false));
-       /* Picasso.with(holder.itemView.getContext()).load(bliDing.pic)
+                .into(iv);
+/*        Picasso.with(holder.itemView.getContext()).load(bliDing.pic)
                 .placeholder(R.mipmap.ic_launcher)
                 .transform(new Transformation() {
                     @Override
@@ -200,12 +197,12 @@ public class BAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 Intent intent = new Intent();
                 intent.setClass(host, BliDecActivity.class);
                 intent.putExtra(BliDecActivity.EXTRA_SHOT, bliDing);
-                /*ActivityOptions options =
-                        ActivityOptions.makeSceneTransitionAnimation(host,
-                                Pair.create(view, host.getString(R.string.transition_shot)),
-                                Pair.create(view, host.getString(R.string
-                                        .transition_shot_background)));*/
-                host.startActivity(intent);//, options.toBundle());
+                ActivityOptionsCompat options =
+                        ActivityOptionsCompat.makeSceneTransitionAnimation(
+                                host, view, String.format("%s.image", bliDing.pic));
+                host.startActivity(intent, options.toBundle());
+
+
             }
         });
 
@@ -213,8 +210,10 @@ public class BAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private void bindLoadingViewHolder(LoadingMoreHolder holder, int position) {
         // only show the infinite load progress spinner if there are already items in the
         // grid i.e. it's not the first item & data is being loaded
-        holder.progress.setVisibility(position > 0 && dataLoading.isDataLoading() ?
-                View.VISIBLE : View.INVISIBLE);
+        holder.progress.setVisibility(
+               /* position > 0 && dataLoading.isDataLoading() ?
+                View.VISIBLE : */
+                View.INVISIBLE);
     }
     @Override
     public int getItemCount() {

@@ -11,7 +11,7 @@ public class BliDingItem extends Item implements Parcelable {
     public final int aid;
     public final int typeid;
     public final String subtitle;
-    public final int play;
+    public final String play;
     public final int review;
     public final int video_review;
     public final int favorites;
@@ -39,7 +39,7 @@ public class BliDingItem extends Item implements Parcelable {
         }
     };
 
-    public BliDingItem(  int aid, String title, String pic,int typeid, String subtitle, int play, int review, int video_review, int favorites, int mid, String author, String description, String create, long pubdate,  int credit, int coins, String duration) {
+    public BliDingItem(  int aid, String title, String pic,int typeid, String subtitle, String play, int review, int video_review, int favorites, int mid, String author, String description, String create, long pubdate,  int credit, int coins, String duration) {
         super(aid, title, pic);
         this.aid = aid;
         this.typeid = typeid;
@@ -64,7 +64,7 @@ public class BliDingItem extends Item implements Parcelable {
         aid = in.readInt();
         typeid = in.readInt();
         subtitle = in.readString();
-        play = in.readInt();
+        play = in.readString();
         review = in.readInt();
         video_review = in.readInt();
         favorites = in.readInt();
@@ -86,7 +86,7 @@ public class BliDingItem extends Item implements Parcelable {
         dest.writeInt(aid);
         dest.writeInt(typeid);
         dest.writeString(subtitle);
-        dest.writeInt(play);
+        dest.writeString(play);
         dest.writeInt(review);
         dest.writeInt(video_review);
         dest.writeInt(favorites);

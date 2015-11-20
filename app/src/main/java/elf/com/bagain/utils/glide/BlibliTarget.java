@@ -111,7 +111,7 @@ public class BlibliTarget extends GlideDrawableImageViewTarget implements Palett
             ripple = ViewUtils.createRipple(palette.getDarkMutedSwatch().getRgb(), 0.25f);
         } else {
             // no swatches found, fall back to grey :(
-            ripple = ViewUtils.createRipple(palette.getDarkMutedSwatch().getRgb(), 0.25f);
+           // ripple = ViewUtils.createRipple(palette.getDarkMutedSwatch().getRgb(), 0.25f);
             //ripple = getView().getContext().getDrawable(R.drawable.grid_item_background);
         }
         ((BadgedFourThreeImageView) getView()).setForeground(ripple);
