@@ -68,7 +68,7 @@
                 android:layout_width="@dimen/action_bar_default_height"
                 android:layout_height="match_parent"
                 android:contentDescription="@string/imageview_content_description"
-                android:src="@drawable/video_more" />
+                android:src="@mipmap/video_more" />
         </LinearLayout>
 
         <LinearLayout
@@ -140,7 +140,7 @@
                     android:layout_toLeftOf="@id/mediacontroller_play_pause"
                     android:contentDescription="@string/imageview_content_description"
                     android:gravity="center"
-                    android:src="@drawable/mediacontroller_snapshot" />
+                    android:src="@mipmap/mediacontroller_snapshot" />
                 
                  <ImageButton
                     android:id="@+id/mediacontroller_send_danmaku"
@@ -152,7 +152,7 @@
                     android:layout_toLeftOf="@id/mediacontroller_snapshot"
                     android:contentDescription="@string/imageview_content_description"
                     android:gravity="center"
-                    android:src="@drawable/ic_send_danmaku" />
+                    android:src="@mipmap/ic_send_danmaku" />
 
                 <ImageButton
                     android:id="@+id/mediacontroller_screen_size"

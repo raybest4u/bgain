@@ -31,11 +31,27 @@ import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.helper.HttpConnection.Response;
 
-import elf.com.bagain.utils.XLog;
+import elf.com.bagain.utils.CompressionTools;
+import elf.com.bagain.utils.DeviceUtils;
+import elf.com.bagain.utils.HttpUtil;
+import elf.com.bagain.utils.ImageUtils;
+import elf.com.bagain.utils.MediaUtils;
+import elf.com.bagain.utils.PreferenceUtils;
+import elf.com.bagain.utils.StringUtils;
+import elf.com.bagain.utils.ToastUtils;
+import elf.com.bagain.view.ApplicationUtils;
+import elf.com.bagain.view.MediaController;
+import elf.com.bagain.view.PlayerService;
+import elf.com.bagain.view.VP;
+import elf.com.bagain.view.VideoView;
+import io.vov.vitamio.utils.FileUtils;
+import io.vov.vitamio.utils.Log;
+import io.vov.vitamio.widget.OutlineTextView;
 import master.flame.danmaku.controller.IDanmakuView;
 import master.flame.danmaku.danmaku.loader.ILoader;
 import master.flame.danmaku.danmaku.loader.IllegalDataException;
 import master.flame.danmaku.danmaku.loader.android.DanmakuLoaderFactory;
+import master.flame.danmaku.danmaku.model.android.DanmakuContext;
 import master.flame.danmaku.danmaku.model.android.Danmakus;
 import master.flame.danmaku.danmaku.parser.BaseDanmakuParser;
 import master.flame.danmaku.danmaku.parser.IDataSource;
@@ -188,7 +204,7 @@ public class BiliVideoViewActivity extends Activity implements
         biliAnim = (ImageView) findViewById(R.id.bili_anim);
         anim = (AnimationDrawable) biliAnim.getBackground();
         anim.start();
-        DanmakuGlobalConfig.DEFAULT.setDanmakuStyle(DanmakuGlobalConfig.DANMAKU_STYLE_STROKEN, 3).setDuplicateMergingEnabled(false);
+       // DanmakuGlobalConfig.DEFAULT.setDanmakuStyle(DanmakuGlobalConfig.DANMAKU_STYLE_STROKEN, 3).setDuplicateMergingEnabled(false);
 //        if (mDanmakuView != null) {
 //            //mParser = createParser(this.getResources().openRawResource(R.raw.comments));
 //            mParser = createParser(openFileInput(danmakuPath));
@@ -457,7 +473,7 @@ private BaseDanmakuParser createParser(String uri) {
 		mSubPath = i.getStringExtra("subPath");
 		mSubShown = i.getBooleanExtra("subShown", true);
 		mIsHWCodec = i.getBooleanExtra("hwCodec", false);
-		XLog.i("L: %b, N: %s, S: %b, P: %f, LP: %d", mNeedLock, mDisplayName,
+		Log.i("L: %b, N: %s, S: %b, P: %f, LP: %d", mNeedLock, mDisplayName,
 				mFromStart, mStartPos, mLoopCount);
 	}
 
@@ -554,7 +570,7 @@ private BaseDanmakuParser createParser(String uri) {
 		if (mMediaController != null)
 			i.putExtra("lockScreen", mMediaController.isLocked());
 		i.putExtra("startPosition", PreferenceUtils.getFloat(mUri
-                + VP.SESSION_LAST_POSITION_SUFIX, 7.7f));
+				+ VP.SESSION_LAST_POSITION_SUFIX, 7.7f));
 		i.putExtra("fromStart", fromStart);
 		i.putExtra("displayName", name);
 		i.setData(path);
@@ -623,7 +639,7 @@ private BaseDanmakuParser createParser(String uri) {
 
 	private boolean isRootActivity() {
 		return ApplicationUtils.isTopActivity(getApplicationContext(),
-                getClass().getName());
+				getClass().getName());
 		// ActivityManager activity = (ActivityManager)
 		// getSystemService(Context.ACTIVITY_SERVICE);
 		// return
@@ -963,7 +979,7 @@ private BaseDanmakuParser createParser(String uri) {
 			PreferenceUtils.put(
 					mUri.toString(),
 					StringUtils.generateTime((int) (0.5 + vPlayer
-                            .getCurrentPosition()))
+							.getCurrentPosition()))
 							+ " / "
 							+ StringUtils.generateTime(vPlayer.getDuration()));
 			if (mEnd)
@@ -1077,7 +1093,7 @@ private BaseDanmakuParser createParser(String uri) {
 	@SuppressLint("SimpleDateFormat")
 	@Override
 	public void snapshot() {
-		if (!com.cjj.bb.utils.FileUtils.sdAvailable()) {
+		if (!elf.com.bagain.utils.FileUtils.sdAvailable()) {
 			ToastUtils.showToast(R.string.file_explorer_sdcard_not_available);
 		} else {
 			Uri imgUri = null;
@@ -1222,7 +1238,8 @@ private BaseDanmakuParser createParser(String uri) {
 //                	
 //		    }
 			if(mParser != null){
-				mDanmakuView.prepare(mParser);
+				DanmakuContext config = new DanmakuContext();
+				mDanmakuView.prepare(mParser,config);
 		        mDanmakuView.showFPS(false);
 		        mDanmakuView.enableDanmakuDrawingCache(false);
 			}else{

@@ -1,11 +1,13 @@
 package elf.com.bagain;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
@@ -16,10 +18,15 @@ import android.text.style.ImageSpan;
 import android.text.style.StyleSpan;
 import android.view.View;
 import android.view.ViewStub;
+import android.view.ViewTreeObserver;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.squareup.leakcanary.RefWatcher;
+import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.BindInt;
@@ -31,7 +38,7 @@ import elf.com.bagain.data.DataManager;
 import elf.com.bagain.data.SourceManager;
 import elf.com.bagain.widget.recycleview.InfiniteScrollListener;
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
    /* @Bind(R.id.toolbar)
     Toolbar toolbar;*/
    @Bind(R.id.drawer)
@@ -74,7 +81,6 @@ public class MainActivity extends Activity {
         });
         grid.setLayoutManager(layoutManager);
         grid.setHasFixedSize(true);
-
         grid.addOnScrollListener(new InfiniteScrollListener(layoutManager, dataManager) {
             @Override
             public void onLoadMore() {
@@ -82,9 +88,22 @@ public class MainActivity extends Activity {
                 //dataManager.loadAllDataSources();
             }
         });
-
-
         dataManager.loadAllDataSources();
+       // test();
+
+
+    }
+
+    private void test(){
+       /* Box box = new Box();
+        Cat schrodingerCat = new Cat();
+        box.hiddenCat = schrodingerCat;
+        Docker.container = box;*/
+    }
+    @Override public void onDestroy() {
+        super.onDestroy();
+        RefWatcher refWatcher = ABPlayerApplication.getRefWatcher(this);
+        refWatcher.watch(this);
     }
     private void checkEmptyState() {
         if (bAdapter.getDataItemCount() == 0) {
@@ -93,6 +112,24 @@ public class MainActivity extends Activity {
             loading.setVisibility(View.GONE);
             setNoFiltersEmptyTextVisibility(View.GONE);
         }
+    }
+    @Override
+    public void onActivityReenter(int resultCode, Intent data) {
+        super.onActivityReenter(resultCode, data);
+
+        supportPostponeEnterTransition();
+
+        Bundle reenterState = new Bundle(data.getExtras());
+
+        grid.smoothScrollToPosition(reenterState.getInt("index", 0));
+        grid.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                grid.getViewTreeObserver().removeOnPreDrawListener(this);
+                supportStartPostponedEnterTransition();
+                return true;
+            }
+        });
     }
     private TextView noFiltersEmptyText;
     private void setNoFiltersEmptyTextVisibility(int visibility) {
@@ -136,3 +173,12 @@ public class MainActivity extends Activity {
 
     }
 }
+/*
+class Cat {
+}
+class Box {
+    Cat hiddenCat;
+}
+class Docker {
+    static Box container;
+}*/

@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
 
-import com.cjj.bb.activity.ABPlayerApplication;
+import elf.com.bagain.ABPlayerApplication;
 
 
 public final class PreferenceUtils {

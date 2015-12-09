@@ -9,6 +9,11 @@ import android.util.Log;
  */
 public class XLog {
     private final static  boolean DEBUG = true;
+
+    public static void i(String tag,String msg){
+        if(DEBUG)
+            Log.i(tag,msg);
+    }
     public static void d(String msg){
         if(DEBUG)
         Log.w("-->",msg);

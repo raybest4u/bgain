@@ -24,7 +24,7 @@
             android:layout_width="94dip"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:src="@drawable/video_num_bg" />
+            android:src="@mipmap/video_num_bg" />
 
         <ImageView
             android:id="@+id/operation_percent"
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="left"
             android:scaleType="matrix"
-            android:src="@drawable/video_num_front" />
+            android:src="@mipmap/video_num_front" />
     </FrameLayout>
 
 </FrameLayout>

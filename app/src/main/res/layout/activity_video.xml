@@ -6,7 +6,7 @@
     android:background="@android:color/black"
     android:orientation="horizontal" >
 
-    <com.cjj.bb.view.VideoView
+    <elf.com.bagain.view.VideoView
         android:id="@+id/video"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

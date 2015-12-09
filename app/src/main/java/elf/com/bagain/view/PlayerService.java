@@ -16,6 +16,8 @@
 
 package elf.com.bagain.view;
 
+import elf.com.bagain.utils.FileUtils;
+import elf.com.bagain.utils.Logger;
 import io.vov.vitamio.MediaPlayer;
 import io.vov.vitamio.MediaPlayer.OnBufferingUpdateListener;
 import io.vov.vitamio.MediaPlayer.OnCompletionListener;
@@ -44,7 +46,6 @@ import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.view.SurfaceHolder;
 
-import com.cjj.bb.utils.Logger;
 
 
 public class PlayerService extends Service implements

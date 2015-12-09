@@ -6,6 +6,7 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.ColorMatrixColorFilter;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -14,6 +15,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -23,6 +25,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -167,8 +171,8 @@ public class BAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 .placeholder(R.color.background_dark)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(iv);
-/*        Picasso.with(holder.itemView.getContext()).load(bliDing.pic)
-                .placeholder(R.mipmap.ic_launcher)
+       /*Picasso.with(holder.itemView.getContext()).load(bliDing.pic)
+                .placeholder(R.color.background_dark)
                 .transform(new Transformation() {
                     @Override
                     public Bitmap transform(Bitmap source) {
@@ -196,12 +200,16 @@ public class BAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         ContextCompat.getColor(host, R.color.background_light));
                 Intent intent = new Intent();
                 intent.setClass(host, BliDecActivity.class);
+                intent.putExtra("index", holder.getAdapterPosition());
                 intent.putExtra(BliDecActivity.EXTRA_SHOT, bliDing);
                 ActivityOptionsCompat options =
                         ActivityOptionsCompat.makeSceneTransitionAnimation(
                                 host, view, String.format("%s.image", bliDing.pic));
-                host.startActivity(intent, options.toBundle());
 
+                host.startActivity(intent, options.toBundle());
+                // 动画过渡
+              /** host.overridePendingTransition(R.anim.push_left_in,
+                        R.anim.push_no);*/
 
             }
         });

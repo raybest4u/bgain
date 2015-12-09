@@ -25,7 +25,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.ViewGroup.LayoutParams;
 
-import com.cjj.bb.utils.DeviceUtils;
+import elf.com.bagain.utils.DeviceUtils;
 
 
 public class VideoView extends SurfaceView {

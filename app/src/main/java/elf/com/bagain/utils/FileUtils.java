@@ -7,11 +7,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
-
 import android.os.Environment;
 import android.os.StatFs;
 import android.util.Log;
-
 
 public class FileUtils {
 	// http://www.fileinfo.com/filetypes/video , "dat" , "bin" , "rms"
