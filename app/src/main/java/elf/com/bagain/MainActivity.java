@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
-                return position == bAdapter.getDataItemCount() ? columns : 1;
+                return position%5==0? columns : 1;
             }
         });
         grid.setLayoutManager(layoutManager);
@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
             setNoFiltersEmptyTextVisibility(View.GONE);
         }
     }
-    @Override
+   /* @Override
     public void onActivityReenter(int resultCode, Intent data) {
         super.onActivityReenter(resultCode, data);
 
@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-    }
+    }*/
     private TextView noFiltersEmptyText;
     private void setNoFiltersEmptyTextVisibility(int visibility) {
         if (visibility == View.VISIBLE) {

@@ -1,33 +1,47 @@
 package elf.com.bagain;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.transition.Transition;
-import android.view.View;
 
+import com.google.gson.Gson;
 import com.squareup.leakcanary.RefWatcher;
-import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import elf.com.bagain.adapter.Descdapter;
+import elf.com.bagain.data.BiliComment;
+import elf.com.bagain.data.BliDingItem;
+import elf.com.bagain.data.Blibli.BlibliDingSearch;
+import elf.com.bagain.data.DataLoadingSubject;
 import elf.com.bagain.utils.ImmersiveUtil;
 import elf.com.bagain.utils.SimpleTransitionListener;
+import elf.com.bagain.utils.XLog;
+import elf.com.bagain.widget.recycleview.InfiniteScrollListener;
 import ooo.oxo.library.widget.PullBackLayout;
 
 public class BliDecActivity  extends AppCompatActivity implements PullBackLayout.Callback {
     public final static String EXTRA_SHOT = "shot";
     @Bind(R.id.puller)
     PullBackLayout puller;
-    @Bind(R.id.rl_root)
-    View root;
+    @Bind(R.id.stories_grid)
+    RecyclerView grid;
+
+
     private ColorDrawable background;
     private int index;
+    private BliDingItem bliDing;
+    private Descdapter   bAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,8 +49,11 @@ public class BliDecActivity  extends AppCompatActivity implements PullBackLayout
         ButterKnife.bind(this);
         puller.setCallback(this);
         index =  getIntent().getIntExtra("index", 0);
+        bliDing = getIntent().getParcelableExtra(EXTRA_SHOT);
+        Gson gson = new Gson();
+        XLog.d(gson.toJson(bliDing));
         background = new ColorDrawable(Color.parseColor("#db77ab"));
-        root.setBackground(background);
+        puller.setBackground(background);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().getEnterTransition().addListener(new SimpleTransitionListener() {
                 @Override
@@ -49,8 +66,30 @@ public class BliDecActivity  extends AppCompatActivity implements PullBackLayout
         } else {
             fadeIn();
         }
-
+        bAdapter = new Descdapter(this,bliDing);
+        grid.setAdapter(bAdapter);
+        LinearLayoutManager  layoutManager = new LinearLayoutManager(this);
+        grid.setLayoutManager(layoutManager);
+        grid.setHasFixedSize(true);
+        grid.addOnScrollListener(new InfiniteScrollListener(layoutManager, getComments) {
+            @Override
+            public void onLoadMore() {
+                // bAdapter.
+                //dataManager.loadAllDataSources();
+                ++page;
+                if(page<=BlibliDingSearch.pages)
+                new VideoInfoTask().execute();
+            }
+        });
+        new VideoInfoTask().execute();
     }
+    private boolean isloadding = false;
+    DataLoadingSubject getComments = new DataLoadingSubject() {
+        @Override
+        public boolean isDataLoading() {
+            return isloadding;
+        }
+    };
     void fadeIn() {
 
         showSystemUi();
@@ -67,11 +106,11 @@ public class BliDecActivity  extends AppCompatActivity implements PullBackLayout
     }
 
     private void showSystemUi() {
-        ImmersiveUtil.exit(root);
+        ImmersiveUtil.exit(puller);
     }
 
     private void hideSystemUi() {
-        ImmersiveUtil.enter(root);
+        ImmersiveUtil.enter(puller);
     }
     @Override
     public void onPullStart() {
@@ -103,5 +142,29 @@ public class BliDecActivity  extends AppCompatActivity implements PullBackLayout
         showSystemUi();
 
         super.supportFinishAfterTransition();
+    }
+
+    private List<BiliComment> comments;
+    private int page = 1;
+    private class VideoInfoTask extends AsyncTask<String, Void, Integer> {
+        String label;
+
+        @Override
+        protected Integer doInBackground(String... arg0) {
+            isloadding = true;
+            comments =  BlibliDingSearch.getBiliComment(bliDing.aid, page);
+
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Integer result) {
+            // TODO Auto-generated method stubs
+            super.onPostExecute(result);
+            if(comments!=null)
+            bAdapter.addAndResort(comments);
+            isloadding = false;
+        }
     }
 }

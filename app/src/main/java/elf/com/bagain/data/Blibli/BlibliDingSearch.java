@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import elf.com.bagain.data.BiliComment;
 import elf.com.bagain.data.BliDingItem;
 import elf.com.bagain.utils.XLog;
 
@@ -28,24 +29,44 @@ public class BlibliDingSearch {
         try {
             JSONObject bangumijson =  new JSONObject(downloadPage("http://www.bilibili.com/index/ding.json"));
             XLog.d("--->"+bangumijson.toString());
+            BliDingItem header = new BliDingItem("动画",1);
+            dings.add(header);
             JSONObject bliarray=bangumijson.getJSONObject("douga");
             pushToArray(bliarray,dings);
+            header = new BliDingItem("音乐",1);
+            dings.add(header);
             bliarray=bangumijson.getJSONObject("music");
-            pushToArray(bliarray,dings);
+            pushToArray(bliarray, dings);
+            header = new BliDingItem("游戏",1);
+            dings.add(header);
             bliarray=bangumijson.getJSONObject("game");
-            pushToArray(bliarray,dings);
+            pushToArray(bliarray, dings);
+            header = new BliDingItem("娱乐",1);
+            dings.add(header);
             bliarray=bangumijson.getJSONObject("ent");
-            pushToArray(bliarray,dings);
+            pushToArray(bliarray, dings);
+            header = new BliDingItem("电视剧",1);
+            dings.add(header);
             bliarray=bangumijson.getJSONObject("teleplay");
-            pushToArray(bliarray,dings);
+            pushToArray(bliarray, dings);
+            header = new BliDingItem("番组计划",1);
+            dings.add(header);
             bliarray=bangumijson.getJSONObject("bangumi");
-            pushToArray(bliarray,dings);
+            pushToArray(bliarray, dings);
+            header = new BliDingItem("电影",1);
+            dings.add(header);
             bliarray=bangumijson.getJSONObject("movie");
-            pushToArray(bliarray,dings);
+            pushToArray(bliarray, dings);
+            header = new BliDingItem("科学·技术",1);
+            dings.add(header);
             bliarray=bangumijson.getJSONObject("technology");
-            pushToArray(bliarray,dings);
+            pushToArray(bliarray, dings);
+            header = new BliDingItem("鬼畜",1);
+            dings.add(header);
             bliarray=bangumijson.getJSONObject("kichiku");
-            pushToArray(bliarray,dings);
+            pushToArray(bliarray, dings);
+            header = new BliDingItem("舞蹈",1);
+            dings.add(header);
             bliarray=bangumijson.getJSONObject("dance");
             pushToArray(bliarray,dings);
 
@@ -57,13 +78,14 @@ public class BlibliDingSearch {
         return dings;
     }
     private static void pushToArray(JSONObject bliarray,List<BliDingItem> dings)throws Exception{
-        for (int i=0;i<bliarray.length();i++) {
+        int length = bliarray.length()>5?4:bliarray.length();
+        for (int i=0;i<length;i++) {
             BliDingItem item = new BliDingItem(
                     bliarray.getJSONObject(i + "").getInt("aid"),
-                    bliarray.getJSONObject(i+"").getString("title").toString(),
-                    bliarray.getJSONObject(i+"").getString("pic").toString(),
+                    bliarray.getJSONObject(i+"").getString("title"),
+                    bliarray.getJSONObject(i+"").getString("pic"),
                     bliarray.getJSONObject(i+"").getInt("typeid"),
-                    bliarray.getJSONObject(i+"").getString("subtitle").toString(),
+                    bliarray.getJSONObject(i+"").getString("subtitle"),
                     bliarray.getJSONObject(i+"").getString("play"),
                     bliarray.getJSONObject(i+"").getInt("review"),
                     bliarray.getJSONObject(i+"").getInt("video_review"),
@@ -79,6 +101,36 @@ public class BlibliDingSearch {
             );
             dings.add(item);
         }
+    }
+    private static void pushToArray2BiliComment(JSONObject bliarray,List<BiliComment> dings)throws Exception{
+        for (int i=0;i<bliarray.length();i++) {
+            BiliComment biliComment = new BiliComment();
+            biliComment.mid = bliarray.getJSONObject(i+ "").getString("mid");
+            biliComment.fbid = bliarray.getJSONObject(i+ "").getString("fbid");
+            biliComment.device = bliarray.getJSONObject(i+ "").getString("device");
+            biliComment.create_at = bliarray.getJSONObject(i+ "").getString("create_at");
+            biliComment.face = bliarray.getJSONObject(i+ "").getString("face");
+            biliComment.nick = bliarray.getJSONObject(i+ "").getString("nick");
+            biliComment.sex = bliarray.getJSONObject(i+ "").getString("sex");
+            biliComment.msg = bliarray.getJSONObject(i+ "").getString("msg");
+            dings.add(biliComment);
+        }
+    }
+    public static  int pages = 1;
+    public static List<BiliComment> getBiliComment(int aid, int page){
+        List<BiliComment> comments = new ArrayList<>();
+        try {
+            JSONObject commentsJson =  new JSONObject(downloadPage("http://api.bilibili.com/feedback?type=jsonp&ver=3&mode=aid&pagesize=20&page="+page+"&aid=" + aid));
+            XLog.d("--->"+commentsJson.toString());
+            pages = commentsJson.getInt("pages");
+            JSONObject bliarray=commentsJson.getJSONObject("hotList");
+            pushToArray2BiliComment(bliarray,comments);
+            bliarray=commentsJson.getJSONObject("list");
+            pushToArray2BiliComment(bliarray,comments);
+        }catch (Exception e){
+            XLog.e(e);
+        }
+        return comments;
     }
     private static String downloadPage(String url) {
         OkHttpClient client = new OkHttpClient();

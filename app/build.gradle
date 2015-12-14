@@ -10,6 +10,7 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -43,11 +44,11 @@ dependencies {
     compile 'org.jsoup:jsoup:1.8.3'
     compile 'com.google.code.gson:gson:2.2.2'
     compile 'com.github.oxoooo:pull-back-layout:1.0.1'
-    compile 'com.github.ctiao:dfm:0.3.9'
-    compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.facebook.fresco:fresco:0.7.0+'
+    compile 'com.github.ctiao:dfm:0.3.0'
+  /*  compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.facebook.fresco:fresco:0.7.0+'*/
     compile 'com.trello:rxlifecycle:0.3.0'
     compile 'com.trello:rxlifecycle-components:0.3.0'
-
+    compile 'com.github.chenupt.android:springindicator:1.0.2@aar'
     compile project(':vitamio')
 }

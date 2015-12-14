@@ -39,7 +39,7 @@ public class MediaPlayerSubtitle extends Activity implements Callback, OnPrepare
 	SurfaceHolder sholder;
 	TextView tv;
 	private MediaPlayer mediaPlayer;
-	private String path = "";
+	private String  path = "/sdcard/msr.mp4";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

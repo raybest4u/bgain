@@ -61,7 +61,7 @@ public class MediaPlayerDemo_Audio extends Activity {
 				/**
 				 * TODO: Set the path variable to a local audio file path.
 				 */
-				path = "";
+				path = "/sdcard/msr.mp4";
 				if (path == "") {
 					// Tell the user to provide an audio file URL.
 					Toast.makeText(MediaPlayerDemo_Audio.this, "Please edit MediaPlayer_Audio Activity, " + "and set the path variable to your audio file path." + " Your audio file must be stored on sdcard.", Toast.LENGTH_LONG).show();

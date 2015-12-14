@@ -17,6 +17,7 @@
 package elf.com.bagain.widget.recycleview;
 
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import elf.com.bagain.data.DataLoadingSubject;
@@ -32,10 +33,10 @@ public abstract class InfiniteScrollListener extends RecyclerView.OnScrollListen
     // The minimum number of items remaining before we should loading more.
     private static final int VISIBLE_THRESHOLD = 5;
 
-    private final GridLayoutManager layoutManager;
+    private final LinearLayoutManager layoutManager;
     private final DataLoadingSubject dataLoading;
 
-    public InfiniteScrollListener(GridLayoutManager layoutManager, DataLoadingSubject dataLoading) {
+    public InfiniteScrollListener(LinearLayoutManager layoutManager, DataLoadingSubject dataLoading) {
         this.layoutManager = layoutManager;
         this.dataLoading = dataLoading;
     }

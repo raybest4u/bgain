@@ -26,7 +26,7 @@ import io.vov.vitamio.MediaMetadataRetriever;
 
 public class MediaMetadataRetrieverDemo extends Activity {
 
-	private String path = "";
+	private String  path = "/sdcard/msr.mp4";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

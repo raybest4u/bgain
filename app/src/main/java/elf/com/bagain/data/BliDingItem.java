@@ -8,23 +8,23 @@ import android.os.Parcelable;
  * email：lr8734@126.com
  */
 public class BliDingItem extends Item implements Parcelable {
-    public final int aid;
-    public final int typeid;
-    public final String subtitle;
-    public final String play;
-    public final int review;
-    public final int video_review;
-    public final int favorites;
-    public final int mid;
-    public final String author;
-    public final String description;
-    public final String create;
-    public final long pubdate;
-    public final String pic;
-    public final int  credit;
-    public final int coins;
-    public final String duration;
-
+    public  int aid;
+    public  int typeid;
+    public  String subtitle;
+    public  String play;
+    public  int review;
+    public  int video_review;
+    public  int favorites;
+    public  int mid;
+    public  String author;
+    public  String description;
+    public  String create;
+    public  long pubdate;
+    public  String pic;
+    public  int  credit;
+    public  int coins;
+    public  String duration;
+    public int type;
     public boolean hasFadedIn = false;
     @SuppressWarnings("unused")
     public static final Parcelable.Creator<BliDingItem> CREATOR = new Parcelable.Creator<BliDingItem>() {
@@ -38,7 +38,10 @@ public class BliDingItem extends Item implements Parcelable {
             return new BliDingItem[size];
         }
     };
-
+    public BliDingItem(String title,int type){
+       super( -100,  title, "");
+        this.type = type;
+    }
     public BliDingItem(  int aid, String title, String pic,int typeid, String subtitle, String play, int review, int video_review, int favorites, int mid, String author, String description, String create, long pubdate,  int credit, int coins, String duration) {
         super(aid, title, pic);
         this.aid = aid;
@@ -77,6 +80,7 @@ public class BliDingItem extends Item implements Parcelable {
         credit = in.readInt();
         coins = in.readInt();
         duration = in.readString();
+        type = in.readInt();
     }
     @Override
     public void writeToParcel(Parcel dest, int flags) {
@@ -99,6 +103,7 @@ public class BliDingItem extends Item implements Parcelable {
         dest.writeInt(credit);
         dest.writeInt(coins);
         dest.writeString(duration);
+        dest.writeInt(type);
     }
 
     @Override

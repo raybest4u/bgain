@@ -1,5 +1,6 @@
 package elf.com.bagain.utils;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 
@@ -11,16 +12,16 @@ public class XLog {
     private final static  boolean DEBUG = true;
 
     public static void i(String tag,String msg){
-        if(DEBUG)
+        if(DEBUG&& !TextUtils.isEmpty(msg))
             Log.i(tag,msg);
     }
     public static void d(String msg){
-        if(DEBUG)
-        Log.w("-->",msg);
+        if(DEBUG&& !TextUtils.isEmpty(msg))
+        Log.d("-->",msg);
     }
     public static void d(String tag,String msg){
-        if(DEBUG)
-            Log.w(tag,msg);
+        if(DEBUG&& !TextUtils.isEmpty(msg))
+            Log.d(tag,msg);
     }
     public static void e(String msg,Exception e){
             Log.e("-->"+msg, "--"+e.getMessage());

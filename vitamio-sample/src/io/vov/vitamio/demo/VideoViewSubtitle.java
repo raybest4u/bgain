@@ -29,7 +29,7 @@ import io.vov.vitamio.widget.VideoView;
 
 public class VideoViewSubtitle extends Activity {
 
-	private String path = "";
+	private String  path = "/sdcard/msr.mp4";
 	private String subtitle_path = "";
 	private VideoView mVideoView;
 	private TextView mSubtitleView;

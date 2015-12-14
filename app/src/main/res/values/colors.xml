@@ -22,7 +22,8 @@
     <color name="background">#ffc3ddea</color>
     <color name="yellow">#ffffcc00</color>
     <color name="title">#ff274462</color>
-    <color name="gray">#808080ff</color>
+    <color name="gray">#ff333333</color>
+    <color name="gray2">#ff555555</color>
     <color name="transparentblue">#445CACEE</color>
     <color name="bili_red">#db77ab</color>
     <color name="bili_red2">#efc1d9</color>

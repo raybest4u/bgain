@@ -78,7 +78,7 @@ public class MediaPlayerDemo_Video extends Activity implements OnBufferingUpdate
 				/*
 				 * TODO: Set the path variable to a local media file path.
 				 */
-				path = "";
+				path = "/sdcard/msr.mp4";
 				if (path == "") {
 					// Tell the user to provide a media file URL.
 					Toast.makeText(MediaPlayerDemo_Video.this, "Please edit MediaPlayerDemo_Video Activity, " + "and set the path variable to your media file path." + " Your media file must be stored on sdcard.", Toast.LENGTH_LONG).show();

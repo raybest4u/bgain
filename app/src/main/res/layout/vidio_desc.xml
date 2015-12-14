@@ -1,6 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_root"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/bili_red3">
 
-</LinearLayout>
+    <carbon.widget.ImageView
+        android:id="@+id/iv_pre"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:src="@mipmap/ic_launcher" />
+
+    <carbon.widget.TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv_pre"
+        android:fontFamily="bold"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:text="@string/app_name"
+        android:textColor="@color/bili_red"
+        android:textSize="18sp" />
+
+    <carbon.widget.LinearLayout
+        android:id="@+id/ll_wrap"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_title"
+        android:orientation="horizontal" >
+
+        <carbon.widget.TextView
+            android:id="@+id/tv_play"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll_wrap"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/app_name"
+            android:textColor="@color/gray" />
+
+        <carbon.widget.TextView
+            android:id="@+id/tv_favorites"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll_wrap"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/app_name"
+            android:textColor="@color/gray" />
+
+        <carbon.widget.TextView
+            android:id="@+id/tv_video_review"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll_wrap"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/app_name"
+            android:textColor="@color/gray" />
+    </carbon.widget.LinearLayout>
+
+    <carbon.widget.TextView
+        android:id="@+id/tv_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/tv_title"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="2dp"
+        android:fontFamily="bold"
+        android:gravity="right"
+        android:padding="4dp"
+        android:text="@string/app_name"
+        android:textColor="@color/white"
+        android:background="@color/black_alpha2"
+        android:textSize="18sp" />
+
+    <carbon.widget.TextView
+        android:id="@+id/tv_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_wrap"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:textColor="@color/black"
+        android:text="@string/app_name"
+        android:textSize="16sp" />
+    <!-- <android.support.v4.view.ViewPager
+         android:id="@+id/pager"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:layout_below="@id/tv_title"/>-->
+
+    <Button
+        android:id="@+id/bt_play"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="99dp"
+        android:background="@drawable/select_button_play"
+        android:textColor="@color/bili_red" />
+</RelativeLayout>

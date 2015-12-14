@@ -6,26 +6,26 @@ import java.net.URL;
 import java.net.URLConnection;
 import android.util.Log;
 
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
+
 public class HttpUtil {
 	public static String cookieName = "";
 	public static String cookieValue = "";
 	public static String hostBase = "";
-	
-	public static String getHtmlString(String urlString) {  
+	private static OkHttpClient client = new OkHttpClient();
+	public static String getHtmlString(String url) {
 	    try {
-	        URL url = new URL(urlString);  
-	        URLConnection ucon = url.openConnection();  
-	        InputStream instr = ucon.getInputStream();  
-	        BufferedInputStream bis = new BufferedInputStream(instr); 
-	       // ByteArrayBuffer baf = new ByteArrayBuffer(500);
-	        int current = 0;  
-	        while ((current = bis.read()) != -1) {  
-	          //  baf.append((byte) current);
-	        }  
-	        return "";//EncodingUtils.getString(baf.toByteArray(), "utf-8");
+			Request request = new Request.Builder()
+					.url(url)
+					.build();
+
+			Response response = client.newCall(request).execute();
+			return response.body().string();
 	    } catch (Exception e) {
 	    	
-	    	Log.d("win","lllll"+e.toString());
+	    	XLog.d("win", "lllll" + e.toString());
 	        return "";  
 	    }  
 	} 

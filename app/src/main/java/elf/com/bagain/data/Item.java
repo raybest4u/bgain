@@ -14,6 +14,7 @@ public abstract class Item {
     public float weight;
     public float weightBoost;
 
+
     public Item(long id,
                      String title,
                      String url) {

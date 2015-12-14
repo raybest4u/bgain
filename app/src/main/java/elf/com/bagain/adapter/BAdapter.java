@@ -6,7 +6,6 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.ColorMatrixColorFilter;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -15,7 +14,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -25,8 +23,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Transformation;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -54,53 +50,69 @@ public class BAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     // we need to hold on to an activity ref for the shared element transitions :/
     private final Activity host;
     private final LayoutInflater layoutInflater;
-    private @Nullable
+    private
+    @Nullable
     DataLoadingSubject dataLoading;
 
     private List<Item> items;
 
-    public BAdapter(Activity hostActivity,DataLoadingSubject dataLoading){
+    public BAdapter(Activity hostActivity, DataLoadingSubject dataLoading) {
         this.host = hostActivity;
         this.dataLoading = dataLoading;
         layoutInflater = LayoutInflater.from(host);
         items = new ArrayList<>();
     }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         switch (viewType) {
+            case TYPE_BLIBLI_CATEGORY:
+                return new BiliCategoryHolder(layoutInflater.inflate(R.layout.category_ding, parent, false));
             case TYPE_BLIBLI_ITEM:
                 return new BiliDingHolder(layoutInflater.inflate(R.layout.blibli_ding_item, parent, false));
             case TYPE_LOADING_MORE:
                 return new LoadingMoreHolder(
                         layoutInflater.inflate(R.layout.infinite_loading, parent, false));
-            default:break;
+
+            default:
+                break;
         }
 
         return null;
     }
+
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (position < getDataItemCount()
                 && getDataItemCount() > 0) {
             Item item = getItem(position);
-            if(item instanceof BliDingItem){
-                bindBiliDing((BliDingItem)item, (BiliDingHolder) holder);
+           /* if (item instanceof BliDingItem) {
+                bindBiliDing((BliDingItem) item, (BiliDingHolder) holder);
+            }*/
+            if (item instanceof BliDingItem&&item.id!=-100) {
+                bindBiliDing((BliDingItem) item, (BiliDingHolder) holder);
+            }else if(item instanceof BliDingItem&&item.id==-100){
+                bindBiliHeader((BliDingItem) item, (BiliCategoryHolder) holder);
             }
-        }else {
+        } else {
             bindLoadingViewHolder((LoadingMoreHolder) holder, position);
         }
     }
+
     @Override
     public int getItemViewType(int position) {
         if (position < getDataItemCount()
                 && getDataItemCount() > 0) {
             Item item = getItem(position);
-            if (item instanceof BliDingItem) {
+            if (item instanceof BliDingItem&&item.id!=-100) {
                 return TYPE_BLIBLI_ITEM;
+            }else if(item instanceof BliDingItem&&item.id==-100){
+                return TYPE_BLIBLI_CATEGORY;
             }
         }
         return TYPE_LOADING_MORE;
     }
+
     public void addAndResort(Collection<? extends BliDingItem> newItems) {
         boolean add = true;
         this.items.addAll(newItems);
@@ -113,13 +125,22 @@ public class BAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 */
         notifyDataSetChanged();
     }
+    private void bindBiliHeader(final BliDingItem bliDing, final BiliCategoryHolder holder) {
+        holder.title.setText(bliDing.title);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+            }
+        });
+    }
     private void bindBiliDing(final BliDingItem bliDing, final BiliDingHolder holder) {
         holder.pocket.setImageResource(R.mipmap.ic_launcher);
         holder.title.setText(bliDing.title);
-        holder.comments.setText(bliDing.author);
+        holder.comments.setText(""+bliDing.play);
+        holder.tv_view.setText(""+bliDing.video_review);
         final BadgedFourThreeImageView iv = (BadgedFourThreeImageView) holder.pocket;
-       Glide.with(host)
+        Glide.with(host)
                 .load(bliDing.pic)
                 .listener(new RequestListener<String, GlideDrawable>() {
 
@@ -206,15 +227,16 @@ public class BAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         ActivityOptionsCompat.makeSceneTransitionAnimation(
                                 host, view, String.format("%s.image", bliDing.pic));
 
-                host.startActivity(intent, options.toBundle());
+                host.startActivity(intent);//, options.toBundle());
                 // 动画过渡
-              /** host.overridePendingTransition(R.anim.push_left_in,
-                        R.anim.push_no);*/
+                host.overridePendingTransition(R.anim.push_left_in,
+                        R.anim.push_no);
 
             }
         });
 
     }
+
     private void bindLoadingViewHolder(LoadingMoreHolder holder, int position) {
         // only show the infinite load progress spinner if there are already items in the
         // grid i.e. it's not the first item & data is being loaded
@@ -223,17 +245,21 @@ public class BAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 View.VISIBLE : */
                 View.INVISIBLE);
     }
+
     @Override
     public int getItemCount() {
         // include loading footer
         return getDataItemCount() + 1;
     }
+
     private Item getItem(int position) {
         return items.get(position);
     }
+
     public int getDataItemCount() {
         return items.size();
     }
+
     private void add(Item item) {
         items.add(item);
     }
@@ -251,15 +277,28 @@ public class BAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         TextView comments;
         @Bind(R.id.pocket)
         ImageView pocket;
-
+        @Bind(R.id.tv_view)
+        TextView tv_view;
         public BiliDingHolder(View itemView) {
             super(itemView);
            /* pocket = (ImageView) itemView.findViewById(R.id.pocket);
             title = (TextView) itemView.findViewById(R.id.story_title);
             comments = (TextView) itemView.findViewById(R.id.story_comments);*/
-           ButterKnife.bind(this, itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
+    class BiliCategoryHolder extends RecyclerView.ViewHolder {
+
+        @Bind(R.id.title)
+        TextView title;
+
+
+        public BiliCategoryHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+    }
+
     class LoadingMoreHolder extends RecyclerView.ViewHolder {
 
         ProgressBar progress;

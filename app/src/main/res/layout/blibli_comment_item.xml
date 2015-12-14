@@ -1,0 +1,57 @@
+<carbon.widget.RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:carbon_insetColor="@color/colorPrimary"
+    android:id="@+id/story_title_background"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bili_red3"
+    android:layout_marginTop="1px"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    android:stateListAnimator="@animator/raise" >
+
+
+
+        <!-- Needs a concrete height/width as we animate the icon's scale so the asset
+             needs to be larger to stay crisp.  Thus can't wrap height. -->
+        <elf.com.bagain.widget.BadgedFourThreeImageView
+            android:id="@+id/pocket"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_margin="@dimen/avatar_padding"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:src="@mipmap/ic_launcher"/>
+        <!-- Using a TextView rather than a button to have better control over the padding -->
+        <carbon.widget.TextView
+            android:id="@+id/story_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/pocket"
+            android:layout_marginLeft="45dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/bili_red"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:padding="@dimen/carbon_paddingHalf"
+            tools:text="Amazing designer news story"  />
+    <carbon.widget.TextView
+        android:id="@+id/story_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/gray"
+        android:padding="@dimen/carbon_paddingHalf"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        tools:text="7dsfaaaaa" />
+        <carbon.widget.TextView
+            android:id="@+id/story_comments"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black_alpha"
+            android:padding="@dimen/carbon_paddingHalf"
+            android:layout_below="@id/pocket"
+            tools:text="7dsfaaaaa" />
+
+</carbon.widget.RelativeLayout>
