@@ -33,4 +33,10 @@
     <color name="background_light">#fafafa</color>
     <color name="gif_badge_light_image">#40000000</color>
     <color name="gif_badge_dark_image">#b3ffffff</color>
+
+    <color name="indicator_1">#db99ab</color>
+    <color name="indicator_2">#dbaaab</color>
+    <color name="indicator_3">#dbbbab</color>
+    <color name="indicator_4">#dbccab</color>
+    <color name="transparent_theme">#11da251e</color>
 </resources>

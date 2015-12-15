@@ -50,5 +50,6 @@ dependencies {
     compile 'com.trello:rxlifecycle:0.3.0'
     compile 'com.trello:rxlifecycle-components:0.3.0'
     compile 'com.github.chenupt.android:springindicator:1.0.2@aar'
+    compile 'com.github.chenupt.android:multiplemodel:2.0.1@aar'
     compile project(':vitamio')
 }

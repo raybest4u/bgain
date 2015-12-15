@@ -16,8 +16,8 @@ import elf.com.bagain.fragment.DonghuaFragment;
  */
 public class DonghuaTabAdapter extends FragmentPagerAdapter {
 	// 内容标题
-	public static final String[] DONG_HUA_TITLE = new String[] { "全区动态", "MAD·AMV",
-			"MMD·3D", "动画短片", "综合" };
+	public static final String[] DONG_HUA_TITLE = new String[] { "动态", "MAD·AMV",
+			"MMD·3D", "短片", "综合" };
 	
 	public DonghuaTabAdapter(FragmentManager fm) {
 		super(fm);

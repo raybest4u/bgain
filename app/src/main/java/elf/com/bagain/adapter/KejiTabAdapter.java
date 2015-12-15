@@ -14,7 +14,7 @@ import elf.com.bagain.fragment.DonghuaFragment;
  */
 public class KejiTabAdapter extends FragmentPagerAdapter {
 	// 内容标题
-	public static final String[] DONG_HUA_TITLE = new String[] { "全区动态", "纪录片",
+	public static final String[] DONG_HUA_TITLE = new String[] { "动态", "纪录片",
 		"科普人文", "野生技术", "公开课" , "军事", "数码"};
 	
 	public KejiTabAdapter(FragmentManager fm) {

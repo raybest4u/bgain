@@ -42,6 +42,9 @@ public class BliDingItem extends Item implements Parcelable {
        super( -100,  title, "");
         this.type = type;
     }
+    public BliDingItem(String title){
+        super( -200,  title, "");
+    }
     public BliDingItem(  int aid, String title, String pic,int typeid, String subtitle, String play, int review, int video_review, int favorites, int mid, String author, String description, String create, long pubdate,  int credit, int coins, String duration) {
         super(aid, title, pic);
         this.aid = aid;

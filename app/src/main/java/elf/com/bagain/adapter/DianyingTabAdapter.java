@@ -16,8 +16,8 @@ import elf.com.bagain.fragment.DonghuaFragment;
  */
 public class DianyingTabAdapter extends FragmentPagerAdapter {
 	// 内容标题
-	public static final String[] DONG_HUA_TITLE = new String[] { "全区动态", "欧美电影",
-			"日本电影", "国产电影", "电影相关" };
+	public static final String[] DONG_HUA_TITLE = new String[] { "动态", "欧美",
+			"日本", "国产", "相关" };
 	
 	public DianyingTabAdapter(FragmentManager fm) {
 		super(fm);

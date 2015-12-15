@@ -1,19 +1,31 @@
 package elf.com.bagain.adapter;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.ColorMatrixColorFilter;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -22,11 +34,14 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import elf.com.bagain.BiliVideoViewActivity;
+import elf.com.bagain.BliDecActivity;
 import elf.com.bagain.R;
 import elf.com.bagain.data.BiliComment;
 import elf.com.bagain.data.BliDingItem;
+import elf.com.bagain.utils.ObservableColorMatrix;
 import elf.com.bagain.utils.XLog;
 import elf.com.bagain.utils.glide.GlideCircleTransform;
+import elf.com.bagain.widget.BadgedFourThreeImageView;
 
 /**
  * User：McCluskey Ray on 2015/11/10 13:52
@@ -36,18 +51,20 @@ public class Descdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final int TYPE_BLIBLI_ITEM = 0;
     private static final int TYPE_BLIBLI_HEADER = 1;
+    private static final int TYPE_BLIBLI_TAG = 2;
     private static final int TYPE_LOADING_MORE = -1;
     // we need to hold on to an activity ref for the shared element transitions :/
     private final Activity host;
     private final LayoutInflater layoutInflater;
     private BliDingItem bliDing;
     private List<BiliComment> items;
-
+    private List<BliDingItem> tags;
     public Descdapter(Activity hostActivity, BliDingItem bliDing){
         this.host = hostActivity;
         this.bliDing = bliDing;
         layoutInflater = LayoutInflater.from(host);
         items = new ArrayList<>();
+        tags = new ArrayList<>();
     }
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -59,6 +76,8 @@ public class Descdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             case TYPE_LOADING_MORE:
                 return new LoadingMoreHolder(
                         layoutInflater.inflate(R.layout.infinite_loading, parent, false));
+            case TYPE_BLIBLI_TAG:
+                return  new TagsHolder(layoutInflater.inflate(R.layout.desc_tags, parent, false));
             default:break;
         }
 
@@ -76,6 +95,8 @@ public class Descdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     bindBiliDing((BiliComment) item, (BiliDingHolder) holder);
                 }
             }
+        }else if(holder instanceof  TagsHolder){
+            bindTagsHolder((TagsHolder) holder, position);
         }else if(holder instanceof LoadingMoreHolder){
                 bindLoadingViewHolder((LoadingMoreHolder) holder, position);
         }
@@ -84,8 +105,10 @@ public class Descdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
     @Override
     public int getItemViewType(int position) {
-         if(position<1){
+         if(position==0){
              return TYPE_BLIBLI_HEADER;
+         }else if(position == 1){
+             return  TYPE_BLIBLI_TAG;
          }else if (position < getDataItemCount()
                 && getDataItemCount() > 0) {
              BiliComment item = getItem(position);
@@ -101,6 +124,12 @@ public class Descdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void addAndResort(Collection<? extends BiliComment> newItems) {
         this.items.addAll(newItems);
         notifyDataSetChanged();
+    }
+    public void addTags(Collection<? extends BliDingItem> newTags) {
+       // this.items.addAll(newItems);
+        this.tags.addAll(newTags);
+        notifyDataSetChanged();
+       // notifyDataSetChanged();
     }
 
     private void bindBiliDing(final BiliComment bliDing, final BiliDingHolder holder) {
@@ -121,6 +150,111 @@ public class Descdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                /* position > 0 && dataLoading.isDataLoading() ?
                 View.VISIBLE : */
                 View.INVISIBLE);
+    }
+    private void bindTagsHolder(TagsHolder holder,int position){
+        BiliDingHolder2 holder2;
+        if(tags.size()==0){
+            holder.itemView.setVisibility(View.GONE);
+        }
+        for (BliDingItem item: tags){
+            holder2 =   new BiliDingHolder2(layoutInflater.inflate(R.layout.blibli_ding_item_tag, holder.scrollView, false));
+            bindBiliDing(item,holder2);
+            holder.scrollView.addView(holder2.itemView);
+        }
+    }
+
+    class BiliDingHolder2 extends RecyclerView.ViewHolder {
+
+        @Bind(R.id.story_title)
+        TextView title;
+        @Bind(R.id.story_comments)
+        TextView comments;
+        @Bind(R.id.pocket)
+        ImageView pocket;
+        @Bind(R.id.tv_view)
+        TextView tv_view;
+        public BiliDingHolder2(View itemView) {
+            super(itemView);
+           /* pocket = (ImageView) itemView.findViewById(R.id.pocket);
+            title = (TextView) itemView.findViewById(R.id.story_title);
+            comments = (TextView) itemView.findViewById(R.id.story_comments);*/
+            ButterKnife.bind(this, itemView);
+        }
+    }
+    private void bindBiliDing(final BliDingItem bliDing, final BiliDingHolder2 holder) {
+        holder.pocket.setImageResource(R.mipmap.ic_launcher);
+        holder.title.setText(bliDing.title);
+        holder.comments.setText(""+bliDing.play);
+        holder.tv_view.setText(""+bliDing.video_review);
+        final BadgedFourThreeImageView iv = (BadgedFourThreeImageView) holder.pocket;
+        Glide.with(host)
+                .load(bliDing.pic)
+                .listener(new RequestListener<String, GlideDrawable>() {
+
+                    @Override
+                    public boolean onResourceReady(GlideDrawable resource, String model,
+                                                   Target<GlideDrawable> target, boolean
+                                                           isFromMemoryCache, boolean
+                                                           isFirstResource) {
+                        if (!bliDing.hasFadedIn) {
+                            iv.setHasTransientState(true);
+                            final ObservableColorMatrix cm = new ObservableColorMatrix();
+                            ObjectAnimator saturation = ObjectAnimator.ofFloat(cm,
+                                    ObservableColorMatrix.SATURATION, 0f, 1f);
+                            saturation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener
+                                    () {
+                                @Override
+                                public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                                    if (iv.getDrawable() != null) {
+                                        iv.getDrawable().setColorFilter(new
+                                                ColorMatrixColorFilter(cm));
+                                    }
+                                }
+                            });
+                            saturation.setDuration(2000);
+                            saturation.addListener(new AnimatorListenerAdapter() {
+                                @Override
+                                public void onAnimationEnd(Animator animation) {
+                                    iv.setHasTransientState(false);
+                                }
+                            });
+                            saturation.start();
+                            bliDing.hasFadedIn = true;
+                        }
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onException(Exception e, String model, Target<GlideDrawable>
+                            target, boolean isFirstResource) {
+                        return false;
+                    }
+                })
+                        // needed to prevent seeing through view as it fades in
+                .placeholder(R.color.background_dark)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(iv);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // iv.setTransitionName(iv.getResources().getString(R.string.transition_shot));
+                holder.pocket.setBackgroundColor(
+                        ContextCompat.getColor(host, R.color.background_light));
+                Intent intent = new Intent();
+                intent.setClass(host, BliDecActivity.class);
+                intent.putExtra("index", holder.getAdapterPosition());
+                intent.putExtra(BliDecActivity.EXTRA_SHOT, bliDing);
+                ActivityOptionsCompat options =
+                        ActivityOptionsCompat.makeSceneTransitionAnimation(
+                                host, view, String.format("%s.image", bliDing.pic));
+
+                host.startActivity(intent);
+               /* host.overridePendingTransition(R.anim.push_left_in,
+                        R.anim.push_no);*/
+                host.finish();
+            }
+        });
     }
     private void bindHeaderViewHolder(HeaderHolder holder, int position) {
         holder.play.setOnClickListener(new View.OnClickListener() {
@@ -156,7 +290,7 @@ public class Descdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return getDataItemCount() + 1;
     }
     private BiliComment getItem(int position) {
-        return items.get(position);
+        return items.get(position>2?position-2:0);
     }
     public int getDataItemCount() {
         return items.size();
@@ -216,6 +350,16 @@ public class Descdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 
+    class TagsHolder extends RecyclerView.ViewHolder {
+        @Bind(R.id.linear)
+        LinearLayout scrollView;
+
+        public TagsHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+
+    }
     class LoadingMoreHolder extends RecyclerView.ViewHolder {
 
         ProgressBar progress;

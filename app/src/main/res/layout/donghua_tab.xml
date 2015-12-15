@@ -1,21 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ooo.oxo.library.widget.PullBackLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_root"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    app:carbon_insetColor="@color/carbon_black"
+    app:carbon_rippleColor="@color/carbon_black"
+    android:background="@color/bili_red2"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/bilibg"
-    android:orientation="vertical" >
+    android:layout_height="match_parent">
 
 
-    <viewpagerindicator.TabPageIndicator
+    <github.chenupt.springindicator.SpringIndicator
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:siTextSize="16sp"
+        app:siIndicatorColors="@array/indicator_colors"
+        app:siTextColor="@color/colorPrimaryDark"
+        app:siSelectedTextColor="@android:color/white"
+        app:siIndicatorColor="@color/colorPrimary"
         android:id="@+id/indicator"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/bili_red" />
+        android:layout_height="56dp"/>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="56dp"/>
 
-</LinearLayout>
+</ooo.oxo.library.widget.PullBackLayout>

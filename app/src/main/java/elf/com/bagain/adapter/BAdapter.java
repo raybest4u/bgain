@@ -31,6 +31,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import elf.com.bagain.BliDecActivity;
+import elf.com.bagain.DonghuaActivity;
 import elf.com.bagain.R;
 import elf.com.bagain.data.BliDingItem;
 import elf.com.bagain.data.DataLoadingSubject;
@@ -130,7 +131,11 @@ public class BAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent();
+                intent.setClass(host, DonghuaActivity.class);
+                intent.putExtra("AreaType",bliDing.type);
+                intent.putExtra(BliDecActivity.EXTRA_SHOT, bliDing);
+                host.startActivity(intent);
             }
         });
     }
@@ -229,8 +234,8 @@ public class BAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
                 host.startActivity(intent);//, options.toBundle());
                 // 动画过渡
-                host.overridePendingTransition(R.anim.push_left_in,
-                        R.anim.push_no);
+               /* host.overridePendingTransition(R.anim.push_left_in,
+                        R.anim.push_no);*/
 
             }
         });

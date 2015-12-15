@@ -15,7 +15,7 @@ import elf.com.bagain.fragment.DonghuaFragment;
  */
 public class YuleTabAdapter extends FragmentPagerAdapter {
 	// 内容标题
-	public static final String[] DONG_HUA_TITLE = new String[] { "全区动态", "搞笑",
+	public static final String[] DONG_HUA_TITLE = new String[] { "动态", "搞笑",
 			"生活", "综艺"};
 	
 	public YuleTabAdapter(FragmentManager fm) {

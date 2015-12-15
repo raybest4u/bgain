@@ -16,8 +16,8 @@ import elf.com.bagain.fragment.DonghuaFragment;
  */
 public class BankumiTabAdapter extends FragmentPagerAdapter {
 	// 内容标题
-	public static final String[] DONG_HUA_TITLE = new String[] { "连载动画", "完结动画",
-			"动画资讯", "官方延伸", "国产动画" };
+	public static final String[] DONG_HUA_TITLE = new String[] { "连载", "完结",
+			"资讯", "官方", "国产" };
 	
 	public BankumiTabAdapter(FragmentManager fm) {
 		super(fm);

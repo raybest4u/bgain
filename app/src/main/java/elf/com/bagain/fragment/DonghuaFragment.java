@@ -23,6 +23,7 @@ import java.util.Locale;
 import elf.com.bagain.R;
 import elf.com.bagain.data.BliDingItem;
 import elf.com.bagain.data.Page;
+import elf.com.bagain.utils.URLUtil;
 
 
 /**
@@ -166,7 +167,7 @@ public class DonghuaFragment extends Fragment implements AbsListView.OnScrollLis
 
                 new MainTask()
                         .execute(
-                                //URLUtil.getVideoListURL(videoType),
+                                URLUtil.getVideoListURL(videoType),
                                 "load");
 
                 mListViewPreLast = lastItem;

@@ -15,8 +15,8 @@ import elf.com.bagain.fragment.DonghuaFragment;
  */
 public class MusicTabAdapter extends FragmentPagerAdapter {
 	// 内容标题
-	public static final String[] DONG_HUA_TITLE = new String[] { "全区动态", "翻唱",
-			"VOCALOID", "演奏", "音乐选集"};
+	public static final String[] DONG_HUA_TITLE = new String[] { "动态", "翻唱",
+			"VOCALOID", "演奏", "音乐"};
 	
 	public MusicTabAdapter(FragmentManager fm) {
 		super(fm);

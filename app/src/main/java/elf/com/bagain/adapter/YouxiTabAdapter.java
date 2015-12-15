@@ -15,7 +15,7 @@ import elf.com.bagain.fragment.DonghuaFragment;
  */
 public class YouxiTabAdapter extends FragmentPagerAdapter {
 	// 内容标题
-	public static final String[] DONG_HUA_TITLE = new String[] { "全区动态", "单机联机",
+	public static final String[] DONG_HUA_TITLE = new String[] { "动态", "单/联机",
 			"网络游戏", "电子竞技" };
 	
 	public YouxiTabAdapter(FragmentManager fm) {

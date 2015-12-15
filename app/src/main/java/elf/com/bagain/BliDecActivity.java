@@ -7,7 +7,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.transition.Transition;
@@ -27,10 +26,11 @@ import elf.com.bagain.data.DataLoadingSubject;
 import elf.com.bagain.utils.ImmersiveUtil;
 import elf.com.bagain.utils.SimpleTransitionListener;
 import elf.com.bagain.utils.XLog;
+import elf.com.bagain.view.swipeback.SwipeBackActivity;
 import elf.com.bagain.widget.recycleview.InfiniteScrollListener;
 import ooo.oxo.library.widget.PullBackLayout;
 
-public class BliDecActivity  extends AppCompatActivity implements PullBackLayout.Callback {
+public class BliDecActivity  extends SwipeBackActivity implements PullBackLayout.Callback {
     public final static String EXTRA_SHOT = "shot";
     @Bind(R.id.puller)
     PullBackLayout puller;
@@ -145,7 +145,9 @@ public class BliDecActivity  extends AppCompatActivity implements PullBackLayout
     }
 
     private List<BiliComment> comments;
+    private List<BliDingItem> tags;
     private int page = 1;
+    private boolean hadAddTags = false;
     private class VideoInfoTask extends AsyncTask<String, Void, Integer> {
         String label;
 
@@ -153,7 +155,8 @@ public class BliDecActivity  extends AppCompatActivity implements PullBackLayout
         protected Integer doInBackground(String... arg0) {
             isloadding = true;
             comments =  BlibliDingSearch.getBiliComment(bliDing.aid, page);
-
+            if(!hadAddTags)
+            tags = BlibliDingSearch.getTags(bliDing.aid);
 
             return null;
         }
@@ -164,6 +167,10 @@ public class BliDecActivity  extends AppCompatActivity implements PullBackLayout
             super.onPostExecute(result);
             if(comments!=null)
             bAdapter.addAndResort(comments);
+            if(!hadAddTags&&tags!=null){
+                hadAddTags = true;
+                bAdapter.addTags(tags);
+            }
             isloadding = false;
         }
     }

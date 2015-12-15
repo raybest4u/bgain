@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
 <!--    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -58,5 +58,24 @@
         <item name="android:activityOpenExitAnimation">@anim/push_left_out</item>
         <item name="android:activityCloseEnterAnimation">@anim/push_right_in</item>
         <item name="android:activityCloseExitAnimation">@anim/push_right_out</item>
+    </style>
+    <style name="Default" parent="@android:style/Theme.Holo.Light" tools:targetApi="11">
+        <item name="android:textColorPrimaryInverse">@color/transparent_theme</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowTitleSize">@dimen/title_bar_height</item>
+    </style>
+    <style name="Default.SwipeBack" parent="@style/Default">
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <style name="Default.SwipeBack.NoTitleBar" parent="@style/Default.SwipeBack">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar" tools:targetApi="11">false</item>
+    </style>
+    <style name="SwipeBackLayout">
+        <item name="edge_size">50dip</item>
+        <item name="shadow_left">@mipmap/shadow_left</item>
+        <item name="shadow_right">@mipmap/shadow_right</item>
+        <item name="shadow_bottom">@mipmap/shadow_bottom</item>
     </style>
 </resources>
