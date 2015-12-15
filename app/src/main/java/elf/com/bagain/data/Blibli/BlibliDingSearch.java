@@ -47,11 +47,11 @@ public class BlibliDingSearch {
             dings.add(header);
             bliarray=bangumijson.getJSONObject("ent");
             pushToArray(bliarray, dings);
-            header = new BliDingItem("电视剧",1);
+            header = new BliDingItem("电视剧",8);
             dings.add(header);
             bliarray=bangumijson.getJSONObject("teleplay");
             pushToArray(bliarray, dings);
-            header = new BliDingItem("番组计划",1);
+            header = new BliDingItem("番组计划",9);
             dings.add(header);
             bliarray=bangumijson.getJSONObject("bangumi");
             pushToArray(bliarray, dings);
@@ -63,11 +63,11 @@ public class BlibliDingSearch {
             dings.add(header);
             bliarray=bangumijson.getJSONObject("technology");
             pushToArray(bliarray, dings);
-            header = new BliDingItem("鬼畜",1);
+            header = new BliDingItem("鬼畜",10);
             dings.add(header);
             bliarray=bangumijson.getJSONObject("kichiku");
             pushToArray(bliarray, dings);
-            header = new BliDingItem("舞蹈",3);
+            header = new BliDingItem("舞蹈",11);
             dings.add(header);
             bliarray=bangumijson.getJSONObject("dance");
             pushToArray(bliarray,dings);
