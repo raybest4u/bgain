@@ -93,6 +93,12 @@ public class Constants {
 		public static final int DIAN_JI = 17;	//单机联机
 		public static final int WANG_LUO_DIAN_YIN = 65;	//网络游戏
 		public static final int DIAN_ZI_JING_JI = 60;	//电子竞技
+
+		public static final int KICHIKU = 119;	//鬼畜
+		public static final int TOW_K = 17;	//二次元鬼畜
+		public static final int TREE_K = 127;	//三次元鬼畜
+		public static final int VOCALOID = 126;	//人力VOCALOID
+
 		
 	}
 	/**

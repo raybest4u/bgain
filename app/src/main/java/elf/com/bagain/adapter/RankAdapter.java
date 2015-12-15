@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import elf.com.bagain.fragment.DonghuaFragment;
+import elf.com.bagain.fragment.RankFragment;
 
 
 /**
@@ -32,23 +33,23 @@ public class RankAdapter extends FragmentPagerAdapter {
 		
 		switch (position) {
 		case 0:
-			return DonghuaFragment.newInstance(10070);
+			return RankFragment.newInstance(10070);
 		case 1:
-			return DonghuaFragment.newInstance(100733);
+			return RankFragment.newInstance(100733);
 		case 2:
-			return DonghuaFragment.newInstance(10071);
+			return RankFragment.newInstance(10071);
 		case 3:
-			return DonghuaFragment.newInstance(10073);
+			return RankFragment.newInstance(10073);
 		case 4:
-			return DonghuaFragment.newInstance(10074);
+			return RankFragment.newInstance(10074);
 		case 5:
-			return DonghuaFragment.newInstance(100736);
+			return RankFragment.newInstance(100736);
 		case 6:
-			return DonghuaFragment.newInstance(10075);
+			return RankFragment.newInstance(10075);
 		case 7:
-			return DonghuaFragment.newInstance(100723);
+			return RankFragment.newInstance(100723);
 		default:
-			return DonghuaFragment.newInstance(1);
+			return RankFragment.newInstance(1);
 		}
 		
 		// MainFragment fragment = new MainFragment(position);

@@ -31,7 +31,7 @@ public class BlibliDingSearch {
         try {
             JSONObject bangumijson =  new JSONObject(downloadPage("http://www.bilibili.com/index/ding.json"));
             XLog.d("--->"+bangumijson.toString());
-            BliDingItem header = new BliDingItem("动画",2);
+            BliDingItem header = new BliDingItem("动画",1);
             dings.add(header);
             JSONObject bliarray=bangumijson.getJSONObject("douga");
             pushToArray(bliarray,dings);
@@ -43,31 +43,31 @@ public class BlibliDingSearch {
             dings.add(header);
             bliarray=bangumijson.getJSONObject("game");
             pushToArray(bliarray, dings);
-            header = new BliDingItem("娱乐",6);
+            header = new BliDingItem("娱乐",5);
             dings.add(header);
             bliarray=bangumijson.getJSONObject("ent");
             pushToArray(bliarray, dings);
-            header = new BliDingItem("电视剧",8);
+            header = new BliDingItem("电视剧",11);
             dings.add(header);
             bliarray=bangumijson.getJSONObject("teleplay");
             pushToArray(bliarray, dings);
-            header = new BliDingItem("番组计划",9);
+            header = new BliDingItem("番组计划",13);
             dings.add(header);
             bliarray=bangumijson.getJSONObject("bangumi");
             pushToArray(bliarray, dings);
-            header = new BliDingItem("电影",7);
+            header = new BliDingItem("电影",23);
             dings.add(header);
             bliarray=bangumijson.getJSONObject("movie");
             pushToArray(bliarray, dings);
-            header = new BliDingItem("科学·技术",5);
+            header = new BliDingItem("科学·技术",36);
             dings.add(header);
             bliarray=bangumijson.getJSONObject("technology");
             pushToArray(bliarray, dings);
-            header = new BliDingItem("鬼畜",10);
+            header = new BliDingItem("鬼畜",119);
             dings.add(header);
             bliarray=bangumijson.getJSONObject("kichiku");
             pushToArray(bliarray, dings);
-            header = new BliDingItem("舞蹈",11);
+            header = new BliDingItem("舞蹈",129);
             dings.add(header);
             bliarray=bangumijson.getJSONObject("dance");
             pushToArray(bliarray,dings);
@@ -83,6 +83,7 @@ public class BlibliDingSearch {
     public static List<BliDingItem> getCategory(String query) {
         List<BliDingItem> dings = new ArrayList<>();
         try {
+            XLog.d("get date with url -->",query);
             JSONObject donghuajson = new JSONObject(HttpUtil.getHtmlString(query));
             JSONArray bliarray=donghuajson.getJSONArray("list");
             for (int i=0;i<bliarray.length();i++) {
@@ -113,7 +114,42 @@ public class BlibliDingSearch {
         }
         return dings;
     }
-
+    @WorkerThread
+    public static List<BliDingItem> getCategory2(String query) {
+        List<BliDingItem> dings = new ArrayList<>();
+        try {
+            XLog.d("get date with url -->",query);
+            JSONObject json = new JSONObject(HttpUtil.getHtmlString(query));
+            JSONObject donghuajson = json.getJSONObject("rank");
+            JSONArray bliarray=donghuajson.getJSONArray("list");
+            for (int i=0;i<bliarray.length();i++) {
+                BliDingItem item = new BliDingItem(
+                        bliarray.getJSONObject(i ).getInt("aid"),
+                        bliarray.getJSONObject(i).getString("title"),
+                        bliarray.getJSONObject(i).getString("pic"),
+                        bliarray.getJSONObject(i).getInt("typeid"),
+                        bliarray.getJSONObject(i).getString("subtitle"),
+                        bliarray.getJSONObject(i).getString("play"),
+                        bliarray.getJSONObject(i).getInt("review"),
+                        bliarray.getJSONObject(i).getInt("video_review"),
+                        bliarray.getJSONObject(i).getInt("favorites"),
+                        bliarray.getJSONObject(i).getInt("mid"),
+                        bliarray.getJSONObject(i).getString("author"),
+                        bliarray.getJSONObject(i).getString("description"),
+                        bliarray.getJSONObject(i).getString("create"),
+                        bliarray.getJSONObject(i).getInt("pubdate"),
+                        bliarray.getJSONObject(i).getInt("credit"),
+                        bliarray.getJSONObject(i).getInt("coins"),
+                        bliarray.getJSONObject(i).getString("duration")
+                );
+                dings.add(item);
+                //Log.d("TAG--->", "--->"+item.getTitle());
+            }
+        }catch (Exception e){
+            XLog.e("-->",e);
+        }
+        return dings;
+    }
     private static void pushToArray(JSONObject bliarray,List<BliDingItem> dings)throws Exception{
         int length = bliarray.length()>5?4:bliarray.length();
         for (int i=0;i<length;i++) {
