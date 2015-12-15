@@ -1,7 +1,5 @@
 package elf.com.bagain;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -18,15 +16,12 @@ import android.text.style.ImageSpan;
 import android.text.style.StyleSpan;
 import android.view.View;
 import android.view.ViewStub;
-import android.view.ViewTreeObserver;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.squareup.leakcanary.RefWatcher;
-import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 import java.util.List;
-import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.BindInt;

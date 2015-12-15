@@ -101,7 +101,7 @@ public class DonghuaActivity extends SwipeBackActivity implements PullBackLayout
 			break;
 		default:
 			//titleText.setText("电影");
-			adapter = new DianyingTabAdapter(getSupportFragmentManager());
+			adapter = new RankAdapter(getSupportFragmentManager());
 			break;
 		}
 

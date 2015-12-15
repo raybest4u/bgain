@@ -5,13 +5,10 @@
     android:background="@color/bilibg"
     tools:context=".MainFrag">
 
-    <ListView
+    <carbon.widget.RecyclerView
         android:id="@+id/videoListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="12dp"
-        android:layout_marginLeft="18dp"
-        android:layout_marginRight="18dp"
         android:cacheColorHint="#00000000"
         android:divider="#00000000"
         android:dividerHeight="8dp"

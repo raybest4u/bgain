@@ -15,6 +15,7 @@ import java.util.List;
 
 import elf.com.bagain.data.BiliComment;
 import elf.com.bagain.data.BliDingItem;
+import elf.com.bagain.utils.HttpUtil;
 import elf.com.bagain.utils.XLog;
 
 /**
@@ -78,6 +79,41 @@ public class BlibliDingSearch {
 
         return dings;
     }
+    @WorkerThread
+    public static List<BliDingItem> getCategory(String query) {
+        List<BliDingItem> dings = new ArrayList<>();
+        try {
+            JSONObject donghuajson = new JSONObject(HttpUtil.getHtmlString(query));
+            JSONArray bliarray=donghuajson.getJSONArray("list");
+            for (int i=0;i<bliarray.length();i++) {
+                BliDingItem item = new BliDingItem(
+                        bliarray.getJSONObject(i ).getInt("aid"),
+                        bliarray.getJSONObject(i).getString("title"),
+                        bliarray.getJSONObject(i).getString("pic"),
+                        bliarray.getJSONObject(i).getInt("typeid"),
+                        bliarray.getJSONObject(i).getString("subtitle"),
+                        bliarray.getJSONObject(i).getString("play"),
+                        bliarray.getJSONObject(i).getInt("review"),
+                        bliarray.getJSONObject(i).getInt("video_review"),
+                        bliarray.getJSONObject(i).getInt("favorites"),
+                        bliarray.getJSONObject(i).getInt("mid"),
+                        bliarray.getJSONObject(i).getString("author"),
+                        bliarray.getJSONObject(i).getString("description"),
+                        bliarray.getJSONObject(i).getString("create"),
+                        bliarray.getJSONObject(i).getInt("pubdate"),
+                        bliarray.getJSONObject(i).getInt("credit"),
+                        bliarray.getJSONObject(i).getInt("coins"),
+                        bliarray.getJSONObject(i).getString("duration")
+                );
+                dings.add(item);
+                //Log.d("TAG--->", "--->"+item.getTitle());
+            }
+        }catch (Exception e){
+            XLog.e("-->",e);
+        }
+        return dings;
+    }
+
     private static void pushToArray(JSONObject bliarray,List<BliDingItem> dings)throws Exception{
         int length = bliarray.length()>5?4:bliarray.length();
         for (int i=0;i<length;i++) {
