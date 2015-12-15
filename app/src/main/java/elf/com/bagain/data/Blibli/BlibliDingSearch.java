@@ -127,20 +127,20 @@ public class BlibliDingSearch {
                         bliarray.getJSONObject(i ).getInt("aid"),
                         bliarray.getJSONObject(i).getString("title"),
                         bliarray.getJSONObject(i).getString("pic"),
-                        bliarray.getJSONObject(i).getInt("typeid"),
-                        bliarray.getJSONObject(i).getString("subtitle"),
+                        0,
+                        "",
                         bliarray.getJSONObject(i).getString("play"),
-                        bliarray.getJSONObject(i).getInt("review"),
+                        0,
                         bliarray.getJSONObject(i).getInt("video_review"),
-                        bliarray.getJSONObject(i).getInt("favorites"),
+                        0,
                         bliarray.getJSONObject(i).getInt("mid"),
                         bliarray.getJSONObject(i).getString("author"),
                         bliarray.getJSONObject(i).getString("description"),
                         bliarray.getJSONObject(i).getString("create"),
-                        bliarray.getJSONObject(i).getInt("pubdate"),
-                        bliarray.getJSONObject(i).getInt("credit"),
+                        0,
+                        0,
                         bliarray.getJSONObject(i).getInt("coins"),
-                        bliarray.getJSONObject(i).getString("duration")
+                        "x:xx"
                 );
                 dings.add(item);
                 //Log.d("TAG--->", "--->"+item.getTitle());
