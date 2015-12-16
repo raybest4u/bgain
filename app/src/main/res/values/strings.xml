@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BAgain</string>
+    <string name="app_name">又一B</string>
 
 
     <!-- transition shared elements -->
@@ -40,5 +40,5 @@
     <string name="video_screenshot_save_in">截图存放在 %s.</string>
     <string name="video_screenshot_failed">截图失败</string>
     <string name="closing_file">正在退出…</string>
-    <string name="action_settings">settings</string>
+    <string name="action_settings">设置</string>
 </resources>
