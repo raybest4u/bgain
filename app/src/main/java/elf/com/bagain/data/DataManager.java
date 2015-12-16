@@ -31,6 +31,7 @@ public class DataManager extends BaseDataManager implements DataLoadingSubject {
         setupPageIndexes();
 
     }
+
     private void setupPageIndexes() {
         List<Source> dateSources = filterAdapter.getFilters();
         pageIndexes = new HashMap<>(dateSources.size());
@@ -55,20 +56,27 @@ public class DataManager extends BaseDataManager implements DataLoadingSubject {
             }
         }
     }
+   private   List<BannerItem> bannerItems;
     private void loadBliDing(final Source.DingSearchSource source, final int page) {
+
         new AsyncTask<Void, Void, List<BliDingItem>>() {
             @Override
             protected List<BliDingItem> doInBackground(Void... params) {
+                bannerItems =   BlibliDingSearch.loadBanner();
                 return BlibliDingSearch.ding(source.query);
             }
 
             @Override
             protected void onPostExecute(List<BliDingItem> shots) {
+                if(bannerItems!=null){
+                    onBannerLoaded(bannerItems);
+                }
                 if (shots != null && shots.size() > 0 ) {
                     setPage(shots, page);
                     setDataSource(shots, source.key);
                     onDataLoaded(shots);
                 }
+
                 loadingCount.decrementAndGet();
             }
         }.execute();
@@ -86,7 +94,9 @@ public class DataManager extends BaseDataManager implements DataLoadingSubject {
     public void onDataLoaded(List<? extends BliDingItem> data) {
 
     }
+    public void onBannerLoaded(List<? extends BannerItem> data) {
 
+    }
     @Override
     public boolean isDataLoading() {
         return loadingCount.get() > 0;

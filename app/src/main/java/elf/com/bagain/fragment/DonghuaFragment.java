@@ -105,6 +105,10 @@ public class DonghuaFragment extends Fragment implements AbsListView.OnScrollLis
                 ++page;
                 new MainTask().execute(URLUtil.getRefreshBlogListURL(videoType)+"?page="+page);
             }
+            @Override
+            public void onRefresh() {
+
+            }
         });
     }
     int page = 1;

@@ -53,7 +53,7 @@ import elf.com.bagain.widget.BadgedFourThreeImageView;
  * User：McCluskey Ray on 2015/11/10 13:52
  * email：lr8734@126.com
  */
-public class BAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class SearchBAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final int TYPE_BLIBLI_ITEM = 0;
     private static final int TYPE_BLIBLI_CATEGORY = 1;
@@ -62,18 +62,14 @@ public class BAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     // we need to hold on to an activity ref for the shared element transitions :/
     private final Activity host;
     private final LayoutInflater layoutInflater;
-    private
-    @Nullable
-    DataLoadingSubject dataLoading;
 
     private List<Item> items;
     private List<View> dots; // 图片标题正文的那些点
     private List<View> dotList;
     private int currentItem;
 
-    public BAdapter(Activity hostActivity, DataLoadingSubject dataLoading) {
+    public SearchBAdapter(Activity hostActivity) {
         this.host = hostActivity;
-        this.dataLoading = dataLoading;
         layoutInflater = LayoutInflater.from(host);
         items = new ArrayList<>();
         dots = new ArrayList<>();
@@ -83,10 +79,6 @@ public class BAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         switch (viewType) {
-            case TYPE_BLIBLI_HEADER:
-                return new BiliHeaderHolder(layoutInflater.inflate(R.layout.banner, parent, false));
-            case TYPE_BLIBLI_CATEGORY:
-                return new BiliCategoryHolder(layoutInflater.inflate(R.layout.category_ding, parent, false));
             case TYPE_BLIBLI_ITEM:
                 return new BiliDingHolder(layoutInflater.inflate(R.layout.blibli_ding_item, parent, false));
             case TYPE_LOADING_MORE:
@@ -102,9 +94,7 @@ public class BAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (position == 0) {
-            bindHeaderViewHolder((BiliHeaderHolder) holder, position);
-        } else if (position < getDataItemCount()
+        if(position < getDataItemCount()
                 && getDataItemCount() > 0) {
             Item item = getItem(position);
            /* if (item instanceof BliDingItem) {
@@ -112,8 +102,6 @@ public class BAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             }*/
             if (item instanceof BliDingItem && item.id != -100) {
                 bindBiliDing((BliDingItem) item, (BiliDingHolder) holder);
-            } else if (item instanceof BliDingItem && item.id == -100) {
-                bindBiliHeader((BliDingItem) item, (BiliCategoryHolder) holder);
             }
         } else {
             bindLoadingViewHolder((LoadingMoreHolder) holder, position);
@@ -122,32 +110,19 @@ public class BAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemViewType(int position) {
-        XLog.d("position--"+position);
-        if (position == 0) {
-            return TYPE_BLIBLI_HEADER;
-        }
+
         if (position < getDataItemCount()
                 && getDataItemCount() > 0) {
             Item item = getItem(position);
-            if (item instanceof BliDingItem && item.id != -100) {
+            if (item instanceof BliDingItem ) {
                 return TYPE_BLIBLI_ITEM;
-            } else if (item instanceof BliDingItem && item.id == -100) {
-                return TYPE_BLIBLI_CATEGORY;
             }
         }
         return TYPE_LOADING_MORE;
     }
 
     public void addAndResort(Collection<? extends BliDingItem> newItems) {
-        boolean add = true;
         this.items.addAll(newItems);
-       /* for (BliDingItem newItem : newItems) {
-            if (add) {
-                add(newItem);
-                add = true;
-            }
-        }
-*/
         notifyDataSetChanged();
     }
 
@@ -332,15 +307,15 @@ public class BAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public int getItemCount() {
         // include loading footer
-        return getDataItemCount() + 1;
+        return getDataItemCount();
     }
 
     private Item getItem(int position) {
-        return items.get(position-1);
+        return items.get(position);
     }
 
     public int getDataItemCount() {
-        return items.size()+1;
+        return items.size();
     }
 
     private void add(Item item) {

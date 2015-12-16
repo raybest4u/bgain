@@ -14,9 +14,12 @@
     <dimen name="display_4_text_size">112sp</dimen>
     <dimen name="divider_height">1px</dimen>
     <dimen name="dialog_corners">2dp</dimen>
-    <dimen name="padding_room_for_fab">88dp</dimen> <!-- padding_normal + fab_size + padding_normal -->
-    <dimen name="fab_plus_single_padding">72dp</dimen> <!-- fab_size + padding_normal -->
-    <dimen name="half_fab_plus_single_padding">44dp</dimen> <!-- (fab_size / 2) + padding_normal -->
+    <dimen name="padding_room_for_fab">88dp</dimen>
+    <!-- padding_normal + fab_size + padding_normal -->
+    <dimen name="fab_plus_single_padding">72dp</dimen>
+    <!-- fab_size + padding_normal -->
+    <dimen name="half_fab_plus_single_padding">44dp</dimen>
+    <!-- (fab_size / 2) + padding_normal -->
 
     <!-- dialogs -->
     <dimen name="padding_dialog">24dp</dimen>
@@ -27,7 +30,8 @@
 
     <!-- grid -->
     <integer name="num_columns">2</integer>
-    <dimen name="grid_icon_with_padding">40dp</dimen> <!-- 24dp icon + 2 * @dimen/spacing_normal -->
+    <dimen name="grid_icon_with_padding">40dp</dimen>
+    <!-- 24dp icon + 2 * @dimen/spacing_normal -->
 
     <!-- designer news story -->
     <dimen name="extended_height_toolbar">128dp</dimen>
@@ -36,13 +40,17 @@
     <dimen name="comment_separation">16dp</dimen>
 
     <!-- dribbble shot -->
-    <dimen name="shot_collapsed_app_bar_height">168dp</dimen> <!-- 3 * ?android:actionBarSize -->
-    <dimen name="drag_dismiss_distance">112dp</dimen> <!-- 2 * ?android:actionBarSize -->
+    <dimen name="shot_collapsed_app_bar_height">168dp</dimen>
+    <!-- 3 * ?android:actionBarSize -->
+    <dimen name="drag_dismiss_distance">112dp</dimen>
+    <!-- 2 * ?android:actionBarSize -->
     <!-- avatar should be a 40dp asset in a 48dp touch target & optically aligned with standard padding -->
     <dimen name="avatar_size">40dp</dimen>
     <dimen name="avatar_bounds">48dp</dimen>
-    <dimen name="avatar_padding">4dp</dimen> <!-- (avatar_bounds - avatar_size) / 2 -->
-    <dimen name="avatar_margin">12dp</dimen> <!-- padding_normal - avatar_padding -->
+    <dimen name="avatar_padding">4dp</dimen>
+    <!-- (avatar_bounds - avatar_size) / 2 -->
+    <dimen name="avatar_margin">12dp</dimen>
+    <!-- padding_normal - avatar_padding -->
     <dimen name="comment_actions_height">40dp</dimen>
     <dimen name="comment_like_margin_adjustment">-8dp</dimen>
 

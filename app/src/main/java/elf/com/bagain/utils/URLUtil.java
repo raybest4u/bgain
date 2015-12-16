@@ -355,6 +355,7 @@ public class URLUtil {
                 url = URL_RANK_DIAN_YING;
                 break;
             default:
+                url ="http://www.bilibili.com/index/ding/"+blogType+".json";
                 break;
         }
         return url;

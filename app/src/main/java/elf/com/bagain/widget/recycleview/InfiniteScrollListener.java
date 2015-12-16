@@ -21,6 +21,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import elf.com.bagain.data.DataLoadingSubject;
+import elf.com.bagain.utils.XLog;
 
 
 /**
@@ -46,13 +47,16 @@ public abstract class InfiniteScrollListener extends RecyclerView.OnScrollListen
         final int visibleItemCount = recyclerView.getChildCount();
         final int totalItemCount = layoutManager.getItemCount();
         final int firstVisibleItem = layoutManager.findFirstVisibleItemPosition();
-
+        XLog.d("==>","x:"+dx+",y:"+dy);
         if (!dataLoading.isDataLoading() &&
                 (totalItemCount - visibleItemCount) <= (firstVisibleItem + VISIBLE_THRESHOLD)) {
             onLoadMore();
         }
+        if(dy<10){
+            onRefresh();
+        }
     }
 
     public abstract void onLoadMore();
-
+    public abstract void onRefresh();
 }

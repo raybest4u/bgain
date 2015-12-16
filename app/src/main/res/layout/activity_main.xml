@@ -12,6 +12,7 @@
     android:clipToPadding="false" tools:context=".MainActivity">
 
     <FrameLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -25,11 +26,30 @@
             android:id="@+id/stories_grid"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="?attr/actionBarSize"
             android:scrollbars="vertical"
             android:scrollbarStyle="outsideOverlay"
             android:clipToPadding="false"
             android:background="@color/bili_red"
             android:elevation="1dp" />
+        <!-- Must be last for right layering display -->
+        <FrameLayout
+            android:id="@+id/toolbar_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:titleTextColor="@color/white"
+                android:background="@color/bili_red" />
+
+            <com.miguelcatalan.materialsearchview.MaterialSearchView
+                android:id="@+id/search_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </FrameLayout>
 
         <ProgressBar
             android:id="@android:id/empty"
@@ -55,6 +75,7 @@
             android:layout="@layout/no_connection" />
 
         <carbon.widget.SVGActionButton
+            android:visibility="gone"
             android:id="@+id/volume"
             android:tag="animate"
             android:layout_width="@dimen/carbon_smallFabSize"

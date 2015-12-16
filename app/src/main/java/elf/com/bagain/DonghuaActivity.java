@@ -15,11 +15,14 @@ import android.util.Log;
 import android.view.Window;
 
 import elf.com.bagain.adapter.BankumiTabAdapter;
+import elf.com.bagain.adapter.DanceTabAdapter;
 import elf.com.bagain.adapter.DianyingTabAdapter;
 import elf.com.bagain.adapter.DonghuaTabAdapter;
 import elf.com.bagain.adapter.KejiTabAdapter;
+import elf.com.bagain.adapter.KichikuTabAdapter;
 import elf.com.bagain.adapter.MusicTabAdapter;
 import elf.com.bagain.adapter.RankAdapter;
+import elf.com.bagain.adapter.TeleTabAdapter;
 import elf.com.bagain.adapter.YouxiTabAdapter;
 import elf.com.bagain.adapter.YuleTabAdapter;
 import elf.com.bagain.utils.ImmersiveUtil;
@@ -67,11 +70,11 @@ public class DonghuaActivity extends SwipeBackActivity implements PullBackLayout
             fadeIn();
         }
 		switch (mAreaType){
-		case 1:
+		case 13:
 			//titleText.setText("番剧");
 			adapter = new BankumiTabAdapter(getSupportFragmentManager());
 			break;
-		case 2:
+		case 1:
 			//titleText.setText("动画");
 			adapter = new DonghuaTabAdapter(getSupportFragmentManager());
 			break;
@@ -83,18 +86,30 @@ public class DonghuaActivity extends SwipeBackActivity implements PullBackLayout
 			//titleText.setText("游戏");
 			adapter = new YouxiTabAdapter(getSupportFragmentManager());
 			break;
-		case 5:
+		case 36:
 			//titleText.setText("科学·技术");
 			adapter = new KejiTabAdapter(getSupportFragmentManager());
 			break;
-		case 6:
+		case 5:
 			//titleText.setText("娱乐");
 			adapter = new YuleTabAdapter(getSupportFragmentManager());
 			break;
-		case 7:
+		case 23:
 			//titleText.setText("电影");
 			adapter = new DianyingTabAdapter(getSupportFragmentManager());
 			break;
+        case 11:
+            //titleText.setText("电视剧");
+            adapter = new TeleTabAdapter(getSupportFragmentManager());
+            break;
+        case 119:
+            //titleText.setText("鬼畜");
+            adapter = new KichikuTabAdapter(getSupportFragmentManager());
+            break;
+        case 129:
+            //titleText.setText("舞蹈");
+            adapter = new DanceTabAdapter(getSupportFragmentManager());
+            break;
 		case 8:
 			//titleText.setText("排行榜");
 			adapter = new RankAdapter(getSupportFragmentManager());

@@ -1,11 +1,5 @@
 package elf.com.bagain.utils;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.List;
-
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
@@ -23,6 +17,12 @@ import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.List;
 
 
 /**
@@ -265,4 +265,5 @@ public class DeviceUtils {
 			XLog.e("-->",e);
 		}
 	}
+
 }

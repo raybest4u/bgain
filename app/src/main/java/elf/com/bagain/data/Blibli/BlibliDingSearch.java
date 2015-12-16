@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import elf.com.bagain.data.BannerItem;
 import elf.com.bagain.data.BiliComment;
 import elf.com.bagain.data.BliDingItem;
 import elf.com.bagain.utils.HttpUtil;
@@ -24,13 +25,33 @@ import elf.com.bagain.utils.XLog;
  */
 public class BlibliDingSearch {
 
+    public static List<BannerItem> loadBanner(){
+        ArrayList<BannerItem> listtemp = new ArrayList<>();
+        JSONObject bannerjson;
+        try {
+            bannerjson = new JSONObject(HttpUtil.getHtmlString("http://www.bilibili.com/index/slideshow.json"));
+            JSONArray array = bannerjson.getJSONArray("list");
+            for (int i = 0; i < array.length(); i++) {
+
+                BannerItem item = new BannerItem();
+                item.setImg(array.getJSONObject(i).getString("img").toString());
+                item.setTitle(array.getJSONObject(i).getString("title").toString());
+                item.setLink(array.getJSONObject(i).getString("link").toString());
+                item.setAd(false);
+                listtemp.add(item);
+            }
+        }catch (Exception e){
+            XLog.e(e);
+        }
+        return listtemp;
+    }
 
     @WorkerThread
     public static List<BliDingItem> ding(String query) {
         List<BliDingItem> dings = new ArrayList<>();
         try {
             JSONObject bangumijson =  new JSONObject(downloadPage("http://www.bilibili.com/index/ding.json"));
-            XLog.d("--->"+bangumijson.toString());
+            XLog.d("--->" + bangumijson.toString());
             BliDingItem header = new BliDingItem("动画",1);
             dings.add(header);
             JSONObject bliarray=bangumijson.getJSONObject("douga");
@@ -79,6 +100,44 @@ public class BlibliDingSearch {
 
         return dings;
     }
+    @WorkerThread
+    public static List<BliDingItem> search(String query,int page) {
+        List<BliDingItem> dings = new ArrayList<>();
+        try {
+            String url = "http://www.bilibili.com/search?action=autolist&main_ver=v2&pagesize=20&keyword="+query+"&page="+page+"&order=&tids=1&type=";
+            JSONObject jsonObject =  new JSONObject(downloadPage(url));
+            JSONArray bliarray=jsonObject.getJSONObject("res").getJSONArray("result");
+            XLog.d("search with url -->",url);
+            pages = jsonObject.getJSONObject("res").getInt("total");
+            for (int i=0,length = bliarray.length();i<length;i++) {
+                BliDingItem item = new BliDingItem(
+                        bliarray.getJSONObject(i ).getInt("id"),
+                        bliarray.getJSONObject(i).getString("title"),
+                        bliarray.getJSONObject(i).getString("pic"),
+                        11,
+                        bliarray.getJSONObject(i).getString("tag"),
+                        bliarray.getJSONObject(i).getString("play"),
+                        0,
+                        bliarray.getJSONObject(i).getInt("video_review"),
+                        bliarray.getJSONObject(i).getInt("favorites"),
+                        bliarray.getJSONObject(i).getInt("mid"),
+                        bliarray.getJSONObject(i).getString("author"),
+                        bliarray.getJSONObject(i).getString("description"),
+                        "",
+                        bliarray.getJSONObject(i).getInt("pubdate"),
+                        0,
+                        0,
+                        ""
+                );
+                dings.add(item);
+            }
+
+        }catch (Exception e){
+            XLog.e("-->",e);
+        }
+        return dings;
+    }
+
     @WorkerThread
     public static List<BliDingItem> getCategory(String query) {
         List<BliDingItem> dings = new ArrayList<>();

@@ -1,25 +1,23 @@
 package elf.com.bagain;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.transition.Transition;
-
-import com.google.gson.Gson;
-import com.squareup.leakcanary.RefWatcher;
 
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import elf.com.bagain.adapter.Descdapter;
-import elf.com.bagain.data.BiliComment;
+import elf.com.bagain.adapter.BAdapter;
+import elf.com.bagain.adapter.SearchBAdapter;
 import elf.com.bagain.data.BliDingItem;
 import elf.com.bagain.data.Blibli.BlibliDingSearch;
 import elf.com.bagain.data.DataLoadingSubject;
@@ -30,30 +28,29 @@ import elf.com.bagain.view.swipeback.SwipeBackActivity;
 import elf.com.bagain.widget.recycleview.InfiniteScrollListener;
 import ooo.oxo.library.widget.PullBackLayout;
 
-public class BliDecActivity  extends SwipeBackActivity implements PullBackLayout.Callback {
-    public final static String EXTRA_SHOT = "shot";
-    @Bind(R.id.puller)
-    PullBackLayout puller;
-    @Bind(R.id.stories_grid)
+public class SearchResultActivity extends SwipeBackActivity implements PullBackLayout.Callback {
+    @Bind(R.id.rv_list)
     RecyclerView grid;
+    @Bind(R.id.ll_root)
+     PullBackLayout ll_root;
 
 
     private ColorDrawable background;
-    private int index;
-    private BliDingItem bliDing;
-    private Descdapter   bAdapter;
+    private GridLayoutManager layoutManager;
+    private SearchBAdapter bAdapter;
+    private boolean isLoading = false;
+    private int page = 1;
+    private String   keyword;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bli_dec);
+        setContentView(R.layout.activity_search_result);
         ButterKnife.bind(this);
-        puller.setCallback(this);
-        index =  getIntent().getIntExtra("index", 0);
-        bliDing = getIntent().getParcelableExtra(EXTRA_SHOT);
-        Gson gson = new Gson();
-        XLog.d(gson.toJson(bliDing));
-        background = new ColorDrawable(Color.parseColor("#db77ab"));
-        puller.setBackground(background);
+
+        background = new ColorDrawable(Color.parseColor("#99db77ab"));
+        ll_root.setCallback(this);
+        ll_root.setBackground(background);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().getEnterTransition().addListener(new SimpleTransitionListener() {
                 @Override
@@ -66,55 +63,48 @@ public class BliDecActivity  extends SwipeBackActivity implements PullBackLayout
         } else {
             fadeIn();
         }
-        bAdapter = new Descdapter(this,bliDing);
+        bAdapter = new SearchBAdapter(this);
         grid.setAdapter(bAdapter);
-        LinearLayoutManager  layoutManager = new LinearLayoutManager(this);
+        layoutManager = new GridLayoutManager(this, 2);
+        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                return position == bAdapter.getDataItemCount() ? 2 : 1;
+            }
+        });
+
         grid.setLayoutManager(layoutManager);
         grid.setHasFixedSize(true);
-        grid.addOnScrollListener(new InfiniteScrollListener(layoutManager, getComments) {
+        grid.addOnScrollListener(new InfiniteScrollListener(layoutManager, new DataLoadingSubject() {
+            @Override
+            public boolean isDataLoading() {
+                return isLoading;
+            }
+        }) {
             @Override
             public void onLoadMore() {
                 // bAdapter.
                 //dataManager.loadAllDataSources();
+
                 ++page;
                 if(page<=BlibliDingSearch.pages)
-                new VideoInfoTask().execute();
+                new VideoInfoTask().execute(keyword, "loadMore");
             }
+
             @Override
             public void onRefresh() {
 
             }
         });
-        new VideoInfoTask().execute();
+           keyword =  getIntent().getStringExtra("keyword");
+        new VideoInfoTask().execute(keyword,"refresh");
     }
-    private boolean isloadding = false;
-    DataLoadingSubject getComments = new DataLoadingSubject() {
-        @Override
-        public boolean isDataLoading() {
-            return isloadding;
-        }
-    };
-    void fadeIn() {
-
-        showSystemUi();
-    }
-
-    void fadeOut() {
-        hideSystemUi();
-    }
-
-    @Override public void onDestroy() {
-        super.onDestroy();
-        RefWatcher refWatcher = ABPlayerApplication.getRefWatcher(this);
-        refWatcher.watch(this);
-    }
-
     private void showSystemUi() {
-        ImmersiveUtil.exit(puller);
+        ImmersiveUtil.exit(ll_root);
     }
 
     private void hideSystemUi() {
-        ImmersiveUtil.enter(puller);
+        ImmersiveUtil.enter(ll_root);
     }
     @Override
     public void onPullStart() {
@@ -137,10 +127,18 @@ public class BliDecActivity  extends SwipeBackActivity implements PullBackLayout
     public void onPullComplete() {
         supportFinishAfterTransition();
     }
+    void fadeIn() {
+
+        showSystemUi();
+    }
+
+    void fadeOut() {
+        hideSystemUi();
+    }
     @Override
     public void supportFinishAfterTransition() {
         Intent data = new Intent();
-        data.putExtra("index",index);
+        // data.putExtra("index",index);
         setResult(RESULT_OK, data);
 
         showSystemUi();
@@ -148,20 +146,15 @@ public class BliDecActivity  extends SwipeBackActivity implements PullBackLayout
         super.supportFinishAfterTransition();
     }
 
-    private List<BiliComment> comments;
-    private List<BliDingItem> tags;
-    private int page = 1;
-    private boolean hadAddTags = false;
+
+    List<BliDingItem> resultList;
     private class VideoInfoTask extends AsyncTask<String, Void, Integer> {
         String label;
 
         @Override
         protected Integer doInBackground(String... arg0) {
-            isloadding = true;
-            comments =  BlibliDingSearch.getBiliComment(bliDing.aid, page);
-            if(!hadAddTags)
-            tags = BlibliDingSearch.getTags(bliDing.aid);
-
+            isLoading = true;
+            resultList =  BlibliDingSearch.search(arg0[0],page);
             return null;
         }
 
@@ -169,13 +162,12 @@ public class BliDecActivity  extends SwipeBackActivity implements PullBackLayout
         protected void onPostExecute(Integer result) {
             // TODO Auto-generated method stubs
             super.onPostExecute(result);
-            if(comments!=null)
-            bAdapter.addAndResort(comments);
-            if(!hadAddTags&&tags!=null){
-                hadAddTags = true;
-                bAdapter.addTags(tags);
-            }
-            isloadding = false;
+            if(resultList!=null)
+                bAdapter.addAndResort(resultList);
+
+            isLoading = false;
         }
     }
+
+
 }
