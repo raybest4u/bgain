@@ -23,6 +23,7 @@ import elf.com.bagain.data.Blibli.BlibliDingSearch;
 import elf.com.bagain.data.DataLoadingSubject;
 import elf.com.bagain.utils.ImmersiveUtil;
 import elf.com.bagain.utils.SimpleTransitionListener;
+import elf.com.bagain.utils.ToastUtils;
 import elf.com.bagain.utils.XLog;
 import elf.com.bagain.view.swipeback.SwipeBackActivity;
 import elf.com.bagain.widget.recycleview.InfiniteScrollListener;
@@ -162,9 +163,12 @@ public class SearchResultActivity extends SwipeBackActivity implements PullBackL
         protected void onPostExecute(Integer result) {
             // TODO Auto-generated method stubs
             super.onPostExecute(result);
-            if(resultList!=null)
+            if(resultList!=null&&resultList.size()>0) {
                 bAdapter.addAndResort(resultList);
-
+            }else{
+                ToastUtils.showLongToast(SearchResultActivity.this,"没有查找到你要的视频信息！");
+                SearchResultActivity.this.finish();
+            }
             isLoading = false;
         }
     }

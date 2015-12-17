@@ -92,7 +92,7 @@ public class Descdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     && getDataItemCount() > 0) {
                 BiliComment item = getItem(position);
                 if (item instanceof BiliComment) {
-                    bindBiliDing((BiliComment) item, (BiliDingHolder) holder);
+                    bindBiliDing(item, (BiliDingHolder) holder);
                 }
             }
         }else if(holder instanceof  TagsHolder){
@@ -142,6 +142,12 @@ public class Descdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         holder.title.setText(bliDing.nick);
         holder.comments.setText(bliDing.msg);
         holder.story_date.setText(bliDing.create_at);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                XLog.d("comment click");
+            }
+        });
     }
     private void bindLoadingViewHolder(LoadingMoreHolder holder, int position) {
         // only show the infinite load progress spinner if there are already items in the

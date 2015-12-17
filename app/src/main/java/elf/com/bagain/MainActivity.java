@@ -47,6 +47,7 @@ import elf.com.bagain.data.BliDingItem;
 import elf.com.bagain.data.DataManager;
 import elf.com.bagain.data.SourceManager;
 import elf.com.bagain.utils.AnimUtils;
+import elf.com.bagain.utils.PreferenceUtils;
 import elf.com.bagain.utils.XLog;
 import elf.com.bagain.widget.recycleview.InfiniteScrollListener;
 
@@ -76,6 +77,8 @@ public class MainActivity extends AppCompatActivity {
     private DataManager dataManager;
     private BAdapter bAdapter;
     FilterAdapter filterAdapter;
+
+    private String keywords;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,8 +110,8 @@ public class MainActivity extends AppCompatActivity {
         layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
-                XLog.d("==>",""+position);
-                return position==0||(position-1)%5==0? columns : 1;
+                XLog.d("==>", "" + position);
+                return position == 0 || (position - 1) % 5 == 0 ? columns : 1;
             }
         });
         grid.setLayoutManager(layoutManager);
@@ -129,16 +132,21 @@ public class MainActivity extends AppCompatActivity {
        // test();
         searchView.setVoiceSearch(false);
         searchView.setCursorDrawable(R.drawable.custom_cursor);
-        searchView.setSuggestions(new String[]{"test", "test"});
+          keywords = PreferenceUtils.getString("keywords","周星驰,AVI");
+        keywords = keywords.length()>1024?"周星驰,AVI":keywords;
+        searchView.setSuggestions(keywords.split(","));
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
 
                 XLog.d("search-->", "--" + query);
-                if(!TextUtils.isEmpty(query)){
+                if (!TextUtils.isEmpty(query)) {
+                    String newKeywords = keywords+","+query;
+                    PreferenceUtils.put("keywords",newKeywords);
+                    searchView.setSuggestions(newKeywords.split(","));
                     Intent intent = new Intent();
                     intent.setClass(MainActivity.this, SearchResultActivity.class);
-                    intent.putExtra("keyword",query);
+                    intent.putExtra("keyword", query);
                     startActivity(intent);
                 }
 
@@ -175,8 +183,8 @@ public class MainActivity extends AppCompatActivity {
             loading.setVisibility(View.GONE);
             ViewStub stub = (ViewStub) findViewById(R.id.stub_no_connection);
             ImageView iv = (ImageView) stub.inflate();
-            final Drawable avd =
-                    getDrawable(R.mipmap.ic_btn_av_cancel_disabled);
+            final Drawable avd = getResources().getDrawable(R.mipmap.ic_btn_av_cancel_disabled);
+                   // getDrawable(R.mipmap.ic_btn_av_cancel_disabled);
             iv.setImageDrawable(avd);
         }
     }

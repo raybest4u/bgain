@@ -5,7 +5,7 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical"
     app:carbon_insetColor="@color/carbon_black"
-    app:carbon_rippleColor="@color/carbon_black"
+    app:carbon_rippleColor="?attr/carbon_rippleColor"
     android:background="@color/bili_red2"
     android:layout_width="match_parent"
     android:layout_height="match_parent">

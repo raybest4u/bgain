@@ -1,13 +1,13 @@
 <carbon.widget.FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:carbon_insetColor="@color/colorPrimary"
+    android:background="?attr/carbon_colorBackground"
+    app:carbon_rippleColor="?attr/carbon_rippleColor"
     android:id="@+id/story_title_background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     android:orientation="vertical"
-    android:layout_margin="1px"
+    android:layout_margin="2px"
     android:stateListAnimator="@animator/raise" >
 
 

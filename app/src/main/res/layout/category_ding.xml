@@ -23,10 +23,11 @@
     android:padding="12dp"
     android:layout_gravity="center"
     android:indeterminate="true"
-    app:carbon_insetColor="@color/colorPrimary"
+    android:background="@color/bili_red2"
+    app:carbon_rippleColor="?attr/carbon_rippleColor"
     android:textSize="18sp"
     android:textColor="@color/white"
     android:text="@string/app_name"
     android:drawableRight="@mipmap/ic_player_options_item_right"
-    android:indeterminateTint="@color/bili_red"
+    android:indeterminateTint="@color/black_alpha"
     android:indeterminateTintMode="src_in" />

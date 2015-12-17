@@ -8,7 +8,8 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical"
     app:carbon_insetColor="@color/carbon_black"
-    app:carbon_rippleColor="@color/carbon_black"
+    app:carbon_rippleColor="?attr/carbon_rippleColor"
+    android:background="@color/bili_red2"
     android:clipToPadding="false" tools:context=".MainActivity">
 
     <FrameLayout
@@ -30,7 +31,7 @@
             android:scrollbars="vertical"
             android:scrollbarStyle="outsideOverlay"
             android:clipToPadding="false"
-            android:background="@color/bili_red"
+            android:background="@color/bili_red2"
             android:elevation="1dp" />
         <!-- Must be last for right layering display -->
         <FrameLayout

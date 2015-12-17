@@ -2,7 +2,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bilibg"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="?attr/carbon_colorBackground"
+    app:carbon_rippleColor="?attr/carbon_rippleColor"
     tools:context=".MainFrag">
 
     <carbon.widget.RecyclerView
