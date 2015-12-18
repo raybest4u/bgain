@@ -22,8 +22,8 @@
             <ImageButton
                 android:id="@+id/mediacontroller_lock"
                 style="@style/MediaController_Button"
-                android:layout_width="@dimen/action_bar_default_height"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:contentDescription="@string/content_desc_lock"
                 android:src="@drawable/mediacontroller_unlock" />
 
@@ -123,8 +123,8 @@
                 <ImageButton
                     android:id="@+id/mediacontroller_play_pause"
                     style="@style/MediaController_Button"
-                    android:layout_width="64dip"
-                    android:layout_height="48dip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:contentDescription="@string/imageview_content_description"
                     android:gravity="center"
@@ -133,8 +133,8 @@
                 <ImageButton
                     android:id="@+id/mediacontroller_snapshot"
                     style="@style/MediaController_Button"
-                    android:layout_width="64dip"
-                    android:layout_height="42dip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/mediacontroller_button_space"
                     android:layout_toLeftOf="@id/mediacontroller_play_pause"
@@ -145,8 +145,8 @@
                  <ImageButton
                     android:id="@+id/mediacontroller_send_danmaku"
                     style="@style/MediaController_Button"
-                    android:layout_width="64dip"
-                    android:layout_height="42dip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/mediacontroller_button_space"
                     android:layout_toLeftOf="@id/mediacontroller_snapshot"
@@ -157,8 +157,8 @@
                 <ImageButton
                     android:id="@+id/mediacontroller_screen_size"
                     style="@style/MediaController_Button"
-                    android:layout_width="64dip"
-                    android:layout_height="42dip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/mediacontroller_button_space"
                     android:layout_toRightOf="@id/mediacontroller_play_pause"
@@ -169,8 +169,8 @@
                  <ImageButton
                     android:id="@+id/mediacontroller_danmaku_switch"
                     style="@style/MediaController_Button"
-                    android:layout_width="64dip"
-                    android:layout_height="42dip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/mediacontroller_button_space"
                     android:layout_toRightOf="@id/mediacontroller_screen_size"

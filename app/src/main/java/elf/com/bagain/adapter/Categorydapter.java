@@ -142,7 +142,9 @@ public class Categorydapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         holder.pocket.setImageResource(R.mipmap.ic_launcher);
         holder.title.setText(bliDing.title);
         holder.comments.setText(""+bliDing.play);
+        holder.tv_author.setText(""+bliDing.author);
         holder.tv_view.setText(""+bliDing.video_review);
+        holder.tv_view2.setText(""+bliDing.favorites);
         final BadgedFourThreeImageView iv = (BadgedFourThreeImageView) holder.pocket;
         Glide.with(host)
                 .load(bliDing.pic)
@@ -279,6 +281,11 @@ public class Categorydapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         TextView title;
         @Bind(R.id.story_comments)
         TextView comments;
+
+        @Bind(R.id.tv_view2)
+        TextView tv_view2;
+        @Bind(R.id.tv_author)
+        TextView tv_author;
         @Bind(R.id.pocket)
         ImageView pocket;
         @Bind(R.id.tv_view)

@@ -100,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
             }
             @Override
             public void onBannerLoaded(List<? extends BannerItem> data) {
+                if(data!=null&data.size()>0)
                 bAdapter.addBanner(data);
             }
 

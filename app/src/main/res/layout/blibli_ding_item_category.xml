@@ -27,11 +27,23 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="130dp"
+            android:ellipsize="end"
+            android:maxLines="2"
             android:gravity="center_vertical"
             android:textColor="@color/bili_red"
             android:padding="@dimen/carbon_paddingHalf"
             tools:text="Amazing designer news story"  />
-
+    <carbon.widget.TextView
+        android:id="@+id/tv_author"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_marginLeft="130dp"
+        android:layout_marginBottom="26dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/gray2"
+        android:padding="@dimen/carbon_paddingHalf"
+        tools:text="Amazing designer news story"  />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -64,6 +76,18 @@
             android:drawableLeft="@mipmap/ic_info_danmakus"
             android:gravity="center_vertical"
             tools:text="7dsfaaaaa" />
+        <carbon.widget.TextView
+            android:id="@+id/tv_view2"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/white"
+            android:drawablePadding="4dp"
+            android:drawableLeft="@mipmap/ic_special_favorites"
+            android:gravity="center_vertical"
+            tools:text="aa" />
     </LinearLayout>
 
 

@@ -199,7 +199,6 @@ public class BiliVideoViewActivity extends Activity implements
     }
 
     private void findViews(){
-        // DanmakuView
         mDanmakuView = (IDanmakuView) findViewById(R.id.sv_danmaku);
         startVideo = (View) findViewById(R.id.video_start);
         startVideo.setVisibility(View.VISIBLE);
@@ -208,38 +207,6 @@ public class BiliVideoViewActivity extends Activity implements
         anim = (AnimationDrawable) biliAnim.getBackground();
         anim.start();
         DanmakuGlobalConfig.DEFAULT.setDanmakuStyle(DanmakuGlobalConfig.DANMAKU_STYLE_STROKEN, 3).setDuplicateMergingEnabled(false);
-//        if (mDanmakuView != null) {
-//            //mParser = createParser(this.getResources().openRawResource(R.raw.comments));
-//            mParser = createParser(openFileInput(danmakuPath));
-//            //mParser = createParser(danmakuPath);
-//            mDanmakuView.setCallback(new Callback() {
-//
-//                @Override
-//                public void updateTimer(DanmakuTimer timer) {
-//
-//                }
-//
-//                @Override
-//                public void prepared() {
-//                	isload = true;
-//                	startPlayer();
-//                    //mDanmakuView.start();
-//                }
-//            });
-//            mDanmakuView.prepare(mParser);
-//
-//            mDanmakuView.showFPS(true);
-//            mDanmakuView.enableDanmakuDrawingCache(true);
-//            ((View) mDanmakuView).setOnClickListener(new View.OnClickListener() {
-//
-//                @Override
-//                public void onClick(View view) {
-//                    mMediaController.setVisibility(View.VISIBLE);
-//                }
-//            });
-//        }
-
-
     }
 
     private BaseDanmakuParser createParser(InputStream stream) {

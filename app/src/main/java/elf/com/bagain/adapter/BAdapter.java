@@ -284,12 +284,12 @@ public class BAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         // 动态添加图片和下面指示的圆点
         // 初始化图片资源
         adList = newItems;
-        if(host!=null&&isTopActivity("elf.com.bagain")) {
+       // if(host!=null&&!host.isFinishing()) {
             imageViews = new ArrayList<>(newItems.size() + 1);
             for (int i = 0; i < 5; i++) {
                 ImageView imageView = new ImageView(host);
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                Glide.with(host)
+                Glide.with(host.getApplicationContext())
                         .load(newItems.get(i).getImg())
                         .placeholder(R.color.background_dark)
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -300,7 +300,7 @@ public class BAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             }
             if(homePageADAdapter!=null)
                 homePageADAdapter.notifyDataSetChanged();
-        }
+      //  }
 
     }
     /**
