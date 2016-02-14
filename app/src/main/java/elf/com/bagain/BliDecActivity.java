@@ -159,6 +159,7 @@ public class BliDecActivity  extends SwipeBackActivity implements PullBackLayout
         protected Integer doInBackground(String... arg0) {
             isloadding = true;
             comments =  BlibliDingSearch.getBiliComment(bliDing.aid, page);
+            page++;
             if(!hadAddTags)
             tags = BlibliDingSearch.getTags(bliDing.aid);
 

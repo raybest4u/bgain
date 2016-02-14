@@ -17,6 +17,7 @@ import elf.com.bagain.data.BannerItem;
 import elf.com.bagain.data.BiliComment;
 import elf.com.bagain.data.BliDingItem;
 import elf.com.bagain.utils.HttpUtil;
+import elf.com.bagain.utils.StringUtils;
 import elf.com.bagain.utils.XLog;
 
 /**
@@ -241,10 +242,24 @@ public class BlibliDingSearch {
             biliComment.fbid = bliarray.getJSONObject(i+ "").getString("fbid");
             biliComment.device = bliarray.getJSONObject(i+ "").getString("device");
             biliComment.create_at = bliarray.getJSONObject(i+ "").getString("create_at");
-            biliComment.face = bliarray.getJSONObject(i+ "").getString("face");
-            biliComment.nick = bliarray.getJSONObject(i+ "").getString("nick");
-            biliComment.sex = bliarray.getJSONObject(i+ "").getString("sex");
-            biliComment.msg = bliarray.getJSONObject(i+ "").getString("msg");
+            biliComment.face = bliarray.getJSONObject(i + "").getString("face");
+            biliComment.nick = bliarray.getJSONObject(i + "").getString("nick");
+            biliComment.sex = bliarray.getJSONObject(i + "").getString("sex");
+            biliComment.msg = bliarray.getJSONObject(i + "").getString("msg");
+            dings.add(biliComment);
+        }
+    }
+    private static void pushToArray2BiliComment2(JSONArray bliarray,List<BiliComment> dings)throws Exception{
+        for (int i=0;i<bliarray.length();i++) {
+            BiliComment biliComment = new BiliComment();
+            biliComment.mid = bliarray.getJSONObject(i).getString("mid");
+            biliComment.fbid = bliarray.getJSONObject(i).getString("rpid");
+            biliComment.device = bliarray.getJSONObject(i).getString("oid");
+            biliComment.create_at = StringUtils.formatDateTime(bliarray.getJSONObject(i).getLong("ctime")*1000);
+            biliComment.face = bliarray.getJSONObject(i).getJSONObject("member").getString("avatar");
+            biliComment.nick = bliarray.getJSONObject(i).getJSONObject("member").getString("uname");
+            biliComment.sex = bliarray.getJSONObject(i).getJSONObject("member").getString("sex");
+            biliComment.msg = bliarray.getJSONObject(i).getJSONObject("content").getString("message");
             dings.add(biliComment);
         }
     }
@@ -252,13 +267,14 @@ public class BlibliDingSearch {
     public static List<BiliComment> getBiliComment(int aid, int page){
         List<BiliComment> comments = new ArrayList<>();
         try {
-            JSONObject commentsJson =  new JSONObject(downloadPage("http://api.bilibili.com/feedback?type=jsonp&ver=3&mode=aid&pagesize=20&page="+page+"&aid=" + aid));
+            JSONObject commentsJson =  new JSONObject(downloadPage("http://api.bilibili.com/x/reply?jsonp=jsonp&type=1&sort=2&pn="+page+"&oid=" + aid));
+            commentsJson = commentsJson.getJSONObject("data");
             XLog.d("comments--->"+commentsJson.toString());
-            pages = commentsJson.getInt("pages");
-            JSONObject bliarray=commentsJson.getJSONObject("hotList");
-            pushToArray2BiliComment(bliarray,comments);
-            bliarray=commentsJson.getJSONObject("list");
-            pushToArray2BiliComment(bliarray,comments);
+            pages = commentsJson.getJSONObject("page").getInt("count");
+            JSONArray bliarray;//=commentsJson.getJSONArray("hots");
+           // pushToArray2BiliComment2(bliarray, comments);
+            bliarray=commentsJson.getJSONArray("replies");
+            pushToArray2BiliComment2(bliarray, comments);
         }catch (Exception e){
             XLog.e(e);
         }
