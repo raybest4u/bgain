@@ -37,7 +37,7 @@ public class VideoViewBuffer extends Activity implements OnInfoListener, OnBuffe
    * TODO: Set the path variable to a streaming video URL or a local media file
    * path.
    */
-  private String path = "http://cn-gdfs11-dx.acgvideo.com/vg3/c/96/5296428.mp4?expires=1449744300&ssig=azFRk1yIsCvVnGynZY0qFw&oi=1947629244&internal=1&rate=0";
+  private String path = "http://gslb.miaopai.com/stream/aKBgxk0DtHAGTPAMmoxbQQ__.mp4";//"http://cn-gdfs11-dx.acgvideo.com/vg3/c/96/5296428.mp4?expires=1449744300&ssig=azFRk1yIsCvVnGynZY0qFw&oi=1947629244&internal=1&rate=0";
   private Uri uri;
   private VideoView mVideoView;
   private ProgressBar pb;
